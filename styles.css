@@ -435,8 +435,17 @@ body {
 .post h3 {
     font-size: 1.375rem;
     margin: 0.75rem 0;
-    color: var(--text);
     font-weight: 600;
+}
+
+.post h3 a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post h3 a:hover {
+    color: var(--accent);
 }
 
 .post p {
