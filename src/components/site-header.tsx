@@ -29,7 +29,7 @@ export function SiteHeader() {
         <div className="site-container flex h-full items-center justify-between">
           <Link
             href="/music"
-            className="font-display text-2xl font-medium text-gray-900 transition-colors duration-200 hover:text-gray-600 sm:text-3xl"
+            className="font-display text-2xl font-semibold text-gray-950 transition-colors duration-200 hover:text-gray-700 sm:text-3xl"
           >
             Anand Sampat
           </Link>
@@ -41,10 +41,10 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`font-display text-[16px] font-light leading-[28.8px] py-[1.6px] no-underline transition-colors duration-200 ${
+                  className={`font-display text-[17px] font-normal leading-[28.8px] py-[1.6px] no-underline transition-colors duration-200 ${
                     active
                       ? "text-black [background-image:linear-gradient(rgb(0,0,0),rgb(0,0,0))] [background-position:0_calc(100%-1.6px)] [background-repeat:repeat-x] [background-size:1px_1px]"
-                      : "text-gray-600 hover:text-gray-900"
+                      : "text-gray-700 hover:text-gray-900"
                   }`}
                 >
                   {item.label}

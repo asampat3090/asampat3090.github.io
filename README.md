@@ -13,7 +13,8 @@ Minimal Next.js portfolio with three core sections: Music, About, and Writing.
 - `/` — redirects to `/music`
 - `/music` — concise music overview with CTA to pianomixtape.com
 - `/about` — background and current focus
-- `/writing` — Quartz archive index sourced from deployed quartz branch posts
+- `/writing` — Quartz archive index sourced from quartz branch posts
+- `/writing/[slug]` — locally rendered writing pages transformed into the site style
 - `/blog` — redirects to `/writing` for backward compatibility
 
 ## Background audio

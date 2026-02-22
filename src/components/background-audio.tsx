@@ -78,6 +78,10 @@ export function BackgroundAudio() {
     audio.pause();
   };
 
+  const buttonClassName = isPlaying
+    ? "fixed bottom-4 right-4 z-[120] rounded-full border border-slate-900 bg-slate-900 px-4 py-2 text-xs font-semibold tracking-[0.08em] text-white shadow-[0_8px_24px_rgba(15,23,42,0.18)] transition-colors hover:bg-slate-800"
+    : "fixed bottom-4 right-4 z-[120] rounded-full border border-slate-300 bg-white px-4 py-2 text-xs font-semibold tracking-[0.08em] text-slate-900 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-colors hover:border-slate-900";
+
   return (
     <>
       <audio ref={audioRef} src={BACKGROUND_TRACK_URL} preload="metadata" />
@@ -86,9 +90,9 @@ export function BackgroundAudio() {
         onClick={() => {
           void togglePlayback();
         }}
-        className="fixed right-4 bottom-4 z-[120] rounded-full border border-black/15 bg-white/90 px-4 py-2 text-xs tracking-[0.08em] text-gray-700 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-colors hover:border-black/35 hover:text-black"
+        className={buttonClassName}
       >
-        {isPlaying ? "SOUND ON" : autoplayBlocked ? "PLAY SOUND" : "SOUND OFF"}
+        {isPlaying ? "MUSIC ON" : autoplayBlocked ? "PLAY MUSIC" : "MUSIC OFF"}
       </button>
     </>
   );
