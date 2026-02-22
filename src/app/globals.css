@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 22% 12%;
+  --muted: 220 20% 45%;
+  --border: 220 20% 90%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
+  --font-display: var(--font-poppins), Poppins, system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-color: hsl(var(--border));
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+body {
+  font-family: var(--font-inter), Inter, system-ui, sans-serif;
+  font-weight: 300;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main.site-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  main.site-main {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  main.site-main {
+    padding-inline: 10rem;
+  }
+}
+
+.site-container {
+  width: min(100%, 1200px);
+  margin-inline: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-poppins), Poppins, system-ui, sans-serif;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.25rem;
+  line-height: 1.15;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+::selection {
+  background: #dbeafe;
+  color: #0f172a;
+}
