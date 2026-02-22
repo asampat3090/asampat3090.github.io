@@ -19,10 +19,6 @@ function getPostMetadata(slug: string) {
   return quartzPosts.find((post) => post.slug === slug);
 }
 
-export function generateStaticParams() {
-  return quartzPosts.map((post) => ({ slug: post.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: WritingPostPageProps): Promise<Metadata> {
