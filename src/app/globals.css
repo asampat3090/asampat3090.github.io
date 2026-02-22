@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 32% 10%;
+  --muted: 220 18% 34%;
+  --border: 220 18% 86%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --font-sans: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-color: hsl(var(--border));
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+body {
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main.site-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  main.site-main {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  main.site-main {
+    padding-inline: 10rem;
+  }
+}
+
+.site-container {
+  width: min(100%, 1200px);
+  margin-inline: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 3.35rem;
+    line-height: 1.03;
+  }
+}
+
+.writing-prose {
+  color: #111827;
+  font-size: 1.14rem;
+  line-height: 1.95;
+}
+
+.writing-prose > :first-child {
+  margin-top: 0;
+}
+
+.writing-prose > :last-child {
+  margin-bottom: 0;
+}
+
+.writing-prose h1,
+.writing-prose h2,
+.writing-prose h3,
+.writing-prose h4,
+.writing-prose h5,
+.writing-prose h6 {
+  margin-top: 2.1rem;
+  margin-bottom: 0.8rem;
+  color: #020617;
+  line-height: 1.3;
+}
+
+.writing-prose h2 {
+  font-size: 1.65rem;
+}
+
+.writing-prose h3 {
+  font-size: 1.35rem;
+}
+
+.writing-prose p,
+.writing-prose ul,
+.writing-prose ol,
+.writing-prose blockquote {
+  margin: 1.05rem 0;
+}
+
+.writing-prose a {
+  color: #0f172a;
+  text-decoration: underline;
+  text-decoration-thickness: 1.2px;
+  text-underline-offset: 2px;
+}
+
+.writing-prose img,
+.writing-prose video,
+.writing-prose iframe {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 14px;
+  margin: 1.3rem 0;
+}
+
+.writing-prose blockquote {
+  border-left: 3px solid #0f172a;
+  padding-left: 1rem;
+  color: #1f2937;
+}
+
+.writing-prose pre {
+  overflow-x: auto;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.writing-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+::selection {
+  background: #dbeafe;
+  color: #0f172a;
+}
