@@ -1,20 +1,27 @@
-# Piano Mixtape Portfolio
+# Anand Sampat Website
 
-Fresh Next.js portfolio rebuild inspired by a minimalist gallery style, adapted for
-music projects, coding experiments, and research notes.
+Minimal Next.js portfolio with three core sections: Music, About, and Writing.
 
 ## Stack
 
 - Next.js (App Router)
 - TypeScript
 - Tailwind CSS v4
-- KaTeX + react-katex for LaTeX rendering
 
 ## Routes
 
-- `/` — main gallery, hero statement, LaTeX panel, animated visualization
-- `/about` — artist/researcher profile and methodology
-- `/blog` — concise notes page with equation embeds and visualization
+- `/` — redirects to `/music`
+- `/music` — concise music overview with CTA to pianomixtape.com
+- `/about` — background and current focus
+- `/writing` — Quartz archive index sourced from deployed quartz branch posts
+- `/blog` — redirects to `/writing` for backward compatibility
+
+## Background audio
+
+The site includes a soft looping background track with a small bottom-right
+play/pause control. The current source URL lives in:
+
+- `src/components/background-audio.tsx`
 
 ## Local development
 

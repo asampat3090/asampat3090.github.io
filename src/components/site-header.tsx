@@ -10,16 +10,12 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { href: "/", label: "Mixtapes" },
+  { href: "/music", label: "Music" },
   { href: "/about", label: "About" },
-  { href: "/blog", label: "Notes" },
+  { href: "/writing", label: "Writing" },
 ];
 
 function isActiveRoute(pathname: string, href: string): boolean {
-  if (href === "/") {
-    return pathname === "/";
-  }
-
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -32,7 +28,7 @@ export function SiteHeader() {
       <header className="sticky top-0 z-[101] h-36 bg-white/95 backdrop-blur-sm">
         <div className="site-container flex h-full items-center justify-between">
           <Link
-            href="/"
+            href="/music"
             className="font-display text-2xl font-medium text-gray-900 transition-colors duration-200 hover:text-gray-600 sm:text-3xl"
           >
             Anand Sampat

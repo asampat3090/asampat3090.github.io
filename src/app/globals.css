@@ -85,11 +85,6 @@ h1 {
   }
 }
 
-.katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
 ::selection {
   background: #dbeafe;
   color: #0f172a;
