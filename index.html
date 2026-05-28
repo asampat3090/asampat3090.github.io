@@ -7,88 +7,108 @@
 <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
 <style>
   :root {
-    --bg: #fafaf7;
+    --bg: #faf8f4;
     --fg: #1a1a1a;
-    --muted: #555;
-    --rule: #e5e5e0;
-    --link: #1f6feb;
-    --link-hover: #0a4fc2;
+    --muted: #6b6b6b;
+    --rule: #ece8df;
+    --link: #1a1a1a;
+    --accent: #7a2e1f;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
+    font-family: "Charter", "Iowan Old Style", "Sitka Text", "Source Serif Pro",
+                 Georgia, "Times New Roman", serif;
+    font-size: 17.5px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 56px 24px 96px; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 72px 28px 96px; }
 
   /* Header */
-  header { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 36px; }
+  header { display: flex; gap: 32px; align-items: flex-start; margin-bottom: 8px; }
   header img {
-    width: 160px; height: 160px; object-fit: cover; border-radius: 4px;
-    flex-shrink: 0;
+    width: 124px; height: 124px; object-fit: cover; border-radius: 3px;
+    flex-shrink: 0; filter: saturate(0.95);
   }
   header .bio h1 {
-    font-size: 28px; font-weight: 600; margin: 0 0 6px 0; letter-spacing: -0.01em;
+    font-size: 30px; font-weight: 600; margin: -4px 0 4px 0;
+    letter-spacing: -0.01em; font-style: italic;
   }
-  header .bio .tag { color: var(--muted); margin: 0 0 12px 0; font-size: 15px; }
+  header .bio .tag {
+    color: var(--muted); margin: 0 0 16px 0; font-size: 15.5px; font-style: italic;
+  }
   header .bio p { margin: 0 0 10px 0; }
-  header .bio .links { margin-top: 12px; font-size: 14.5px; }
-  header .bio .links a { margin-right: 14px; }
+  header .bio .links {
+    margin-top: 14px; font-size: 14.5px; color: var(--muted);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  header .bio .links a { margin-right: 16px; }
 
   /* Sections */
   h2 {
-    font-size: 18px; font-weight: 600;
-    margin: 40px 0 14px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--rule);
-    letter-spacing: -0.005em;
+    font-size: 13px; font-weight: 600;
+    margin: 56px 0 18px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
-  p { margin: 0 0 12px; }
-  a { color: var(--link); text-decoration: none; }
-  a:hover { color: var(--link-hover); text-decoration: underline; }
+  p { margin: 0 0 14px; }
+  a { color: var(--link); text-decoration: underline; text-decoration-thickness: 0.5px;
+      text-underline-offset: 2.5px; text-decoration-color: #c7c1b3; }
+  a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 
-  /* Entry blocks (work / papers / patents) */
-  .entry { display: flex; gap: 16px; margin: 0 0 18px; align-items: flex-start; }
+  /* Work entries */
+  .entry { margin: 0 0 28px; }
+  .entry .head { margin: 0 0 6px; }
+  .entry .org { font-weight: 600; }
+  .entry .role { font-style: italic; }
   .entry .when {
-    flex: 0 0 110px; color: var(--muted); font-size: 14px; padding-top: 2px;
-    font-variant-numeric: tabular-nums;
+    float: right; color: var(--muted); font-size: 14.5px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-variant-numeric: tabular-nums; padding-top: 4px;
   }
-  .entry .what { flex: 1; }
-  .entry .what .role { font-weight: 600; }
-  .entry .what .desc { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+  .entry p { margin: 0; }
 
-  ul.plain { list-style: none; padding: 0; margin: 0; }
-  ul.plain li { margin: 0 0 10px; }
-  ul.plain li .meta { color: var(--muted); font-size: 14px; }
+  /* Plain lists */
+  ul.refs { list-style: none; padding: 0; margin: 0; }
+  ul.refs li { margin: 0 0 12px; padding-left: 32px; text-indent: -32px; }
+  ul.refs li .idx {
+    display: inline-block; width: 24px; color: var(--muted); font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    text-indent: 0;
+  }
+  ul.refs li .meta { color: var(--muted); font-style: italic; font-size: 15px; }
 
-  /* Contact form */
-  form { display: grid; gap: 10px; margin-top: 10px; max-width: 520px; }
+  /* Contact */
+  form { display: grid; gap: 10px; margin-top: 14px; max-width: 480px; }
   input, textarea {
-    font: inherit; padding: 8px 10px; border: 1px solid var(--rule);
-    border-radius: 4px; background: #fff; color: var(--fg); width: 100%;
+    font: inherit; font-size: 16px; padding: 9px 12px;
+    border: 1px solid var(--rule); border-radius: 2px;
+    background: #fdfcf9; color: var(--fg); width: 100%;
   }
-  textarea { min-height: 100px; resize: vertical; }
+  textarea { min-height: 110px; resize: vertical; }
   button {
-    font: inherit; padding: 8px 14px; border: 1px solid var(--fg);
-    background: var(--fg); color: var(--bg); border-radius: 4px; cursor: pointer;
-    justify-self: start;
+    font: inherit; font-size: 15px; padding: 8px 18px;
+    border: 1px solid var(--fg); background: transparent; color: var(--fg);
+    border-radius: 2px; cursor: pointer; justify-self: start;
+    letter-spacing: 0.02em;
   }
-  button:hover { background: #000; }
+  button:hover { background: var(--fg); color: var(--bg); }
 
   footer {
-    margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
-    color: var(--muted); font-size: 13px;
+    margin-top: 72px; color: var(--muted); font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
 
   @media (max-width: 600px) {
-    .wrap { padding: 32px 18px 64px; }
-    header { flex-direction: column; gap: 16px; }
-    header img { width: 120px; height: 120px; }
-    .entry { flex-direction: column; gap: 2px; }
-    .entry .when { flex-basis: auto; }
+    .wrap { padding: 40px 20px 64px; }
+    header { flex-direction: column; gap: 18px; }
+    header img { width: 110px; height: 110px; }
+    .entry .when { float: none; display: block; padding-top: 0; margin-bottom: 2px; }
+    .entry .head { margin-bottom: 8px; }
   }
 </style>
 </head>
@@ -99,159 +119,209 @@
     <img src="images/anand.jpg" alt="Anand Sampat" />
     <div class="bio">
       <h1>Anand Sampat</h1>
-      <p class="tag">Machine learning leader, builder, and entrepreneur.</p>
+      <p class="tag">I build applied machine learning systems.</p>
       <p>
-        I build and lead teams shipping ML into production — most recently
-        as Associate Director of Machine Learning at
-        <a href="https://www.pathai.com/" target="_blank" rel="noopener">PathAI</a>,
-        previously Director of ML Solutions at
-        <a href="https://oneconcern.com" target="_blank" rel="noopener">One Concern</a>,
-        and before that CEO and co-founder of
-        <a href="https://www.govtech.com/biz/one-concern-acquires-startup-datmo-for-ai-expertise.html" target="_blank" rel="noopener">Datmo</a>
-        (acq. One Concern).
+        Currently CTO and co-founder at <b>Overline IQ</b>, building an agentic
+        AI platform for real estate investors. Co-author of
+        <i>Shipping Machine Learning Systems: A Practical Guide to Building,
+        Deploying and Scaling in Production</i> (Cambridge).
       </p>
       <p>
-        I studied EE / CS / Materials Science at Stanford and Berkeley, and I focus
-        on applying computer vision, NLP, and LLMs to real, mission-critical problems.
-        I also host <a href="https://podcasters.spotify.com/pod/show/thegoodaipod" target="_blank" rel="noopener">The Good AI Podcast</a>
-        and write at <a href="https://thegoodaipod.substack.com" target="_blank" rel="noopener">thegoodaipod</a>.
+        Previously SambaNova, PathAI, One Concern, and Datmo
+        (which I founded and we sold to One Concern). Trained in EE,
+        CS, and Materials at Stanford and Berkeley.
       </p>
       <div class="links">
+        <a href="mailto:me@anandsampat.com">Email</a>
         <a href="https://linkedin.com/in/anandsampat" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://twitter.com/anandsampat" target="_blank" rel="noopener">Twitter</a>
         <a href="https://github.com/asampat3090" target="_blank" rel="noopener">GitHub</a>
         <a href="https://scholar.google.com/citations?user=K8M7Lm0AAAAJ&hl=en" target="_blank" rel="noopener">Scholar</a>
-        <a href="https://drive.google.com/file/d/1CRYUI3cSvT40F1GE43P1AvN52lgm4oyP/view?usp=sharing" target="_blank" rel="noopener">Resume</a>
       </div>
     </div>
   </header>
 
-  <h2>Experience</h2>
+  <h2>Work</h2>
 
   <div class="entry">
-    <div class="when">2022 — Present</div>
-    <div class="what">
-      <div class="role">Associate Director, Machine Learning · <a href="https://www.pathai.com/" target="_blank" rel="noopener">PathAI</a></div>
-      <div class="desc">Lead an 8-person ML product team building computer-vision models that predict molecular biomarkers (RAS+RAF, ROS1, cMET, MSI) from pathology whole-slide images. Drove domain-generalization research across the PathAI product portfolio, contributing to &gt;$5M in new revenue and a 25% reduction in ML development time.</div>
+    <div class="head">
+      <span class="when">2025 — Present</span>
+      <span class="org">Overline IQ</span> &middot; <span class="role">CTO &amp; Co-founder</span>
     </div>
+    <p>
+      Architected and built an agentic AI platform end-to-end — training
+      pipelines, ingestion, orchestration, and the application layer. Shipped
+      <i>Overline Agent</i> to production in six months, delivering continuous
+      tax, property, and insurance analysis for real estate investors.
+      Designed a multimodal model strategy spanning open-source
+      (GLM-4.6V, DeepSeek OCR, Gemma 3) and frontier models (Gemini 3, Opus 4.5),
+      with post-training pipelines for orchestrators and RAG-based document
+      analysis grounded in property DNA. Built infrastructure that securely
+      ingests and analyzes a $1B+ portfolio across 10,000+ properties.
+    </p>
   </div>
 
   <div class="entry">
-    <div class="when">2019 — 2022</div>
-    <div class="what">
-      <div class="role">Director of ML Solutions · <a href="https://oneconcern.com" target="_blank" rel="noopener">One Concern</a></div>
-      <div class="desc">Built the technical analytics org from scratch — hiring, ladders, planning, prioritization. Led technical diligence for a <a href="https://techcrunch.com/2021/06/03/one-concern-sompo/" target="_blank" rel="noopener">$100M investment from SOMPO</a> and kicked off the <a href="https://covid19.oneconcern.com/" target="_blank" rel="noopener">COVID-19 workplace risk modeling</a> effort used by thousands of enterprises.</div>
+    <div class="head">
+      <span class="when">2023 — 2024</span>
+      <span class="org"><a href="https://sambanova.ai" target="_blank" rel="noopener">SambaNova Systems</a></span>
+      &middot; <span class="role">Senior Director of Machine Learning</span>
     </div>
+    <p>
+      Built applied LLM and LVM work on novel AI hardware. Designed pipelines
+      to parse documents, generate synthetic data, and pretrain / finetune
+      TableQA and ChartQA models. Co-authored <i>Composition of Experts</i>, a
+      modular compound AI system for routing across LLMs on enterprise tasks
+      (MLSys). Established the team that delivered 2.4k TPS for Llama 3.2
+      multimodal on proprietary hardware, and ran ML training experiments
+      across medical and document intelligence applications.
+    </p>
   </div>
 
   <div class="entry">
-    <div class="when">2015 — 2019</div>
-    <div class="what">
-      <div class="role">CEO &amp; Co-founder · <a href="https://www.govtech.com/biz/one-concern-acquires-startup-datmo-for-ai-expertise.html" target="_blank" rel="noopener">Datmo</a> (acq. One Concern)</div>
-      <div class="desc">MLOps platform and AI consulting for data-science teams shipping models to production. Raised a seed round, shipped products across CV / NLP / numeric ML, open-sourced <a href="https://github.com/datmo/datmo" target="_blank" rel="noopener">datmo</a>, and exited via acquisition.</div>
+    <div class="head">
+      <span class="when">2020 — Present</span>
+      <span class="org">Lotus AI</span> &middot; <span class="role">Co-founder &amp; Chief Engineer</span>
     </div>
+    <p>
+      Engineering for early-stage ML startups. At <b>WavvAI</b>, built a
+      copyright-free synthetic MIDI data pipeline grounded in musical first
+      principles, then pretrained an autoregressive model — <i>Musica</i> —
+      that generates production-ready EDM, validated with Grammy-winning
+      musicians. At <b>AnyCart</b>, built the grocery recommendation system.
+      At <b>predictABill</b>, built a scraper that parses and summarizes
+      disparate health insurance policies.
+    </p>
   </div>
 
   <div class="entry">
-    <div class="when">2019 — Present</div>
-    <div class="what">
-      <div class="role">ML / MLOps Consulting · Lotus AI</div>
-      <div class="desc">Advisory and implementation for startups on ML stacks across NLP, traditional ML, and CV.</div>
+    <div class="head">
+      <span class="when">2022 — 2023</span>
+      <span class="org"><a href="https://www.pathai.com/" target="_blank" rel="noopener">PathAI</a></span>
+      &middot; <span class="role">Associate Director of Machine Learning</span>
     </div>
+    <p>
+      Generalized pathology computer-vision models to new labs and scanners
+      across five AI products, generating ~$5M in new revenue and cutting ML
+      development time by 25% — four ArXiv preprints in three quarters
+      (SC-MIL, S-DOTA, ContriMix, self-training for liver histopathology).
+      Developed Multiple Instance Learning and graph neural network models
+      to predict molecular biomarkers (RAS+RAF, ROS1, cMET, MSI) for lung
+      and colorectal cancer. Built foundation tissue segmentation and cell
+      classification models on par with disease-specific models, cutting
+      deployment from weeks to days.
+    </p>
   </div>
 
   <div class="entry">
-    <div class="when">2013 — 2015</div>
-    <div class="what">
-      <div class="role">Teaching Assistant · <a href="https://stanford.edu" target="_blank" rel="noopener">Stanford</a></div>
-      <div class="desc">TA'd machine learning (<a href="http://cs229.stanford.edu/syllabus.html" target="_blank" rel="noopener">CS 229</a>), introductory devices &amp; circuits, and physics. Selected for the <a href="https://stvp.stanford.edu/tvf" target="_blank" rel="noopener">Stanford / Threshold Entrepreneurial Leaders Fellowship</a>.</div>
+    <div class="head">
+      <span class="when">2019 — 2022</span>
+      <span class="org"><a href="https://oneconcern.com" target="_blank" rel="noopener">One Concern</a></span>
+      &middot; <span class="role">Director of Machine Learning Solutions</span>
     </div>
+    <p>
+      Initiated the COVID-19 stochastic contact-network modeling effort that
+      became the <a href="https://covid19.oneconcern.com/" target="_blank" rel="noopener">COVID Calculator</a> —
+      a design-award-winning tool that enterprises used to inform
+      return-to-office policy (PLOS One; patent). Streamlined data, model,
+      and code versioning to cut model delivery time in half. Led the
+      technical work behind the $100M SOMPO investment for disaster
+      resilience in Japan.
+    </p>
   </div>
 
-  <h2>Education</h2>
-  <ul class="plain">
-    <li><b>Stanford</b> — M.S. Electrical Engineering (AI focus)</li>
-    <li><b>UC Berkeley</b> — B.S. EECS, B.S. Materials Science, M.S. Materials Science</li>
-  </ul>
+  <div class="entry">
+    <div class="head">
+      <span class="when">2015 — 2019</span>
+      <span class="org">Datmo</span> &middot; <span class="role">CEO &amp; Co-founder · acq. One Concern</span>
+    </div>
+    <p>
+      Developed a novel CNN + NER + ASR combined algorithm for real-time
+      multimedia retrieval — 1.5&times; accuracy and 10&times; latency reduction.
+      Built an AWS-based MLOps platform and
+      <a href="https://github.com/datmo/datmo" target="_blank" rel="noopener">open-source experiment / environment tracker</a>
+      for CV, NLP, and traditional ML, deployed at scale to 1M+ end users.
+    </p>
+  </div>
 
-  <h2>Papers</h2>
-  <ul class="plain">
-    <li>
-      <a href="https://arxiv.org/abs/2306.04527" target="_blank" rel="noopener">ContriMix: Unsupervised disentanglement of content and attribute for domain generalization in microscopy image analysis</a>
-      <div class="meta">arXiv, 2023</div>
+  <h2>Writing</h2>
+  <p>
+    <i>Shipping Machine Learning Systems: A Practical Guide to Building,
+    Deploying and Scaling in Production</i> — Cambridge University Press.
+  </p>
+  <p>
+    I host and write <a href="https://podcasters.spotify.com/pod/show/thegoodaipod" target="_blank" rel="noopener">The Good AI Podcast</a>
+    and an accompanying <a href="https://thegoodaipod.substack.com" target="_blank" rel="noopener">newsletter</a>,
+    where I talk with founders and investors building profitable companies with
+    a purpose. Longer pieces on ML systems live on
+    <a href="https://medium.com/@anandsampat" target="_blank" rel="noopener">Medium</a>.
+  </p>
+
+  <h2>Selected publications</h2>
+  <ul class="refs">
+    <li><span class="idx">[1]</span>
+      <a href="https://arxiv.org/abs/2303.13405" target="_blank" rel="noopener">SC-MIL: Supervised contrastive multiple instance learning for imbalanced classification in pathology</a>.
+      <span class="meta">arXiv, 2023.</span>
     </li>
-    <li>
-      <a href="https://arxiv.org/abs/2305.02401" target="_blank" rel="noopener">Synthetic Domain-Targeted Augmentation (S-DOTA) improves model generalization in digital pathology</a>
-      <div class="meta">arXiv, 2023</div>
+    <li><span class="idx">[2]</span>
+      <a href="https://arxiv.org/abs/2305.02401" target="_blank" rel="noopener">Synthetic Domain-Targeted Augmentation (S-DOTA) improves model generalization in digital pathology</a>.
+      <span class="meta">arXiv, 2023.</span>
     </li>
-    <li>
-      <a href="https://arxiv.org/abs/2303.13405" target="_blank" rel="noopener">SC-MIL: Supervised contrastive multiple instance learning for imbalanced classification in pathology</a>
-      <div class="meta">arXiv, 2023</div>
+    <li><span class="idx">[3]</span>
+      <a href="https://arxiv.org/abs/2306.04527" target="_blank" rel="noopener">ContriMix: Unsupervised disentanglement of content and attribute for domain generalization in microscopy image analysis</a>.
+      <span class="meta">arXiv, 2023.</span>
     </li>
-    <li>
-      <a href="https://arxiv.org/abs/2211.07692" target="_blank" rel="noopener">Self-training of machine learning models for liver histopathology: generalization under clinical shifts</a>
-      <div class="meta">ML4H, NeurIPS, 2022</div>
+    <li><span class="idx">[4]</span>
+      <a href="https://arxiv.org/abs/2211.07692" target="_blank" rel="noopener">Self-training of machine learning models for liver histopathology: generalization under clinical shifts</a>.
+      <span class="meta">ML4H, NeurIPS, 2022.</span>
     </li>
-    <li>
-      <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0262316" target="_blank" rel="noopener">A stochastic contact network model for assessing outbreak risk of COVID-19 in workplaces</a>
-      <div class="meta">PLOS One, 2022</div>
+    <li><span class="idx">[5]</span>
+      <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0262316" target="_blank" rel="noopener">A stochastic contact network model for assessing outbreak risk of COVID-19 in workplaces</a>.
+      <span class="meta">PLOS One, 2022.</span>
+    </li>
+    <li><span class="idx">[6]</span>
+      Composition of Experts: A modular compound AI system leveraging large language models.
+      <span class="meta">MLSys, 2024.</span>
     </li>
   </ul>
 
   <h2>Patents</h2>
-  <ul class="plain">
+  <ul class="refs">
     <li>
-      <a href="https://patents.google.com/patent/US10936969B2/en" target="_blank" rel="noopener">Method and system for an end-to-end artificial intelligence workflow</a>
-      <div class="meta">US10936969B2 · Granted</div>
+      <a href="https://patents.google.com/patent/US10936969B2/en" target="_blank" rel="noopener">Method and system for an end-to-end artificial intelligence workflow</a>.
+      <span class="meta">US10936969B2, granted.</span>
     </li>
     <li>
-      <a href="https://patents.google.com/patent/US20220384054A1/en" target="_blank" rel="noopener">Tool to quantify airborne-disease transmission risk in a workplace setting</a>
-      <div class="meta">US20220384054A1 · Pending</div>
+      <a href="https://patents.google.com/patent/US20220384054A1/en" target="_blank" rel="noopener">Tool to quantify airborne-disease transmission risk in a workplace setting</a>.
+      <span class="meta">US20220384054A1, pending.</span>
     </li>
     <li>
-      <a href="https://patents.google.com/patent/US20210158219A1/en" target="_blank" rel="noopener">Method and system for an end-to-end artificial intelligence workflow (extension)</a>
-      <div class="meta">US20210158219A1 · Pending</div>
+      <a href="https://patents.google.com/patent/US20210158219A1/en" target="_blank" rel="noopener">Method and system for an end-to-end artificial intelligence workflow (extension)</a>.
+      <span class="meta">US20210158219A1, pending.</span>
     </li>
     <li>
-      <a href="https://patents.justia.com/patent/20180089593#history" target="_blank" rel="noopener">Deep-learning-based search and discovery of media content</a>
-      <div class="meta">US20180089593</div>
+      <a href="https://patents.justia.com/patent/20180089593#history" target="_blank" rel="noopener">Deep-learning-based search and discovery of media content</a>.
+      <span class="meta">US20180089593.</span>
     </li>
   </ul>
 
-  <h2>Podcast &amp; Writing</h2>
+  <h2>Elsewhere</h2>
   <p>
-    I host <a href="https://podcasters.spotify.com/pod/show/thegoodaipod" target="_blank" rel="noopener">The Good AI Podcast</a>,
-    interviewing founders and investors building profitable companies with a purpose
-    across healthcare, finance, energy, and climate. Episode summaries go out on the
-    <a href="https://thegoodaipod.substack.com" target="_blank" rel="noopener">Substack</a>;
-    follow along on <a href="https://www.instagram.com/thegoodaipod/" target="_blank" rel="noopener">Instagram</a>.
-  </p>
-  <p>
-    I write on <a href="https://medium.com/@anandsampat" target="_blank" rel="noopener">Medium</a>,
-    <a href="https://thegoodaipod.substack.com" target="_blank" rel="noopener">Substack</a>,
-    and <a href="https://www.linkedin.com/in/anandsampat/recent-activity/all/" target="_blank" rel="noopener">LinkedIn</a>
-    about ML, Good AI, and building real ML systems. Working on a book — <i>Machine Learning in the Real World</i> — currently in progress.
-  </p>
-
-  <h2>Outside of work</h2>
-  <p>
-    Marathoner — 8+ marathons, 15+ shorter races, sub-3 hour qualifier, ran Boston in 2020 and 2021.
-    Find me on <a href="https://www.strava.com/athletes/15035384" target="_blank" rel="noopener">Strava</a>.
-  </p>
-  <p>
-    Pianist, guitarist, and amateur remixer. Music on
+    Eight marathons including Boston in 2020 and 2021
+    (<a href="https://www.strava.com/athletes/15035384" target="_blank" rel="noopener">Strava</a>).
+    Piano pop-covers and remixes on
     <a href="https://www.tiktok.com/@pianomixtape" target="_blank" rel="noopener">TikTok</a>.
   </p>
 
   <h2>Contact</h2>
   <p>
-    For ML / AI consulting, collaboration, or just to say hi — send a note below
-    and I'll get back within 48 hours.
+    For collaboration, advisory work, or just to say hi —
+    <a href="mailto:me@anandsampat.com">me@anandsampat.com</a>, or use the form below.
   </p>
   <form action="https://formspree.io/f/xleyewoo" method="POST">
     <input type="text" name="name" placeholder="Your name" required />
     <input type="email" name="email" placeholder="Your email" required />
-    <textarea name="message" placeholder="How can I help?" required></textarea>
+    <textarea name="message" placeholder="What's on your mind?" required></textarea>
     <button type="submit">Send</button>
   </form>
 
