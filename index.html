@@ -7,79 +7,81 @@
 <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
 <style>
   :root {
-    --bg: #f6f3ec;
-    --surface: #fbf9f4;
-    --fg: #0e0e0e;
-    --muted: #4f4d48;
-    --rule: #d8d2c3;
-    --link-underline: #a89e85;
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --fg: #0a0a0a;
+    --muted: #5a5852;
+    --rule: #d8d3c5;
+    --link-underline: #b8ad94;
     --accent: #7a2e1f;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --serif: ui-serif, "Iowan Old Style", "Charter", Georgia, "Times New Roman", serif;
   }
   html[data-theme="dark"] {
     --bg: #16171a;
-    --surface: #1d1e22;
-    --fg: #ebe7df;
-    --muted: #9a9489;
-    --rule: #2f2f33;
-    --link-underline: #5a5247;
-    --accent: #e09a82;
+    --surface: #1e1f23;
+    --fg: #f1ede4;
+    --muted: #a8a298;
+    --rule: #34343a;
+    --link-underline: #5e5648;
+    --accent: #e6a591;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
   html { transition: background-color 0.25s ease, color 0.25s ease; }
   body {
-    font-family: "Charter", "Iowan Old Style", "Sitka Text", "Source Serif Pro",
-                 Georgia, "Times New Roman", serif;
-    font-size: 19px;
-    line-height: 1.65;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  .wrap { max-width: 780px; margin: 0 auto; padding: 64px 32px 96px; position: relative; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 64px 32px 96px; position: relative; }
 
   /* Theme toggle */
   .theme-toggle {
     position: absolute; top: 28px; right: 32px;
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 1px solid var(--rule); background: transparent;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1.5px solid var(--rule); background: transparent;
     color: var(--muted); cursor: pointer; padding: 0;
     display: inline-flex; align-items: center; justify-content: center;
-    transition: border-color 0.2s ease, color 0.2s ease;
+    transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
   }
-  .theme-toggle:hover { border-color: var(--fg); color: var(--fg); }
-  .theme-toggle svg { width: 16px; height: 16px; }
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--fg);
+    background: var(--surface);
+  }
+  .theme-toggle svg { width: 18px; height: 18px; display: block; }
 
   /* Header */
   header { display: flex; gap: 36px; align-items: flex-start; margin-bottom: 8px; }
   header img {
-    width: 140px; height: 140px; object-fit: cover; border-radius: 3px;
+    width: 144px; height: 144px; object-fit: cover; border-radius: 4px;
     flex-shrink: 0;
   }
   header .bio h1 {
-    font-size: 34px; font-weight: 600; margin: -6px 0 14px 0;
-    letter-spacing: -0.015em; font-style: italic;
+    font-size: 40px; font-weight: 600; margin: -4px 0 16px 0;
+    letter-spacing: -0.02em; line-height: 1.15;
   }
-  header .bio p { margin: 0 0 12px 0; }
+  header .bio p { margin: 0 0 14px 0; font-size: 20px; line-height: 1.55; }
   header .bio .links {
-    margin-top: 18px; font-size: 15px; color: var(--muted);
-    font-family: var(--sans);
+    margin-top: 18px; font-size: 16px;
   }
-  header .bio .links a { margin-right: 18px; }
+  header .bio .links a { margin-right: 20px; }
 
   /* Sections */
   h2 {
-    font-size: 13px; font-weight: 600;
-    margin: 60px 0 20px;
+    font-size: 13px; font-weight: 700;
+    margin: 64px 0 22px;
     color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-family: var(--sans);
+    letter-spacing: 0.18em;
   }
-  p { margin: 0 0 14px; }
+  p { margin: 0 0 16px; }
   a {
     color: var(--fg); text-decoration: underline;
-    text-decoration-thickness: 0.5px;
+    text-decoration-thickness: 1px;
     text-underline-offset: 3px;
     text-decoration-color: var(--link-underline);
     transition: color 0.15s ease, text-decoration-color 0.15s ease;
@@ -87,58 +89,55 @@
   a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 
   /* Work entries */
-  .entry { margin: 0 0 30px; }
-  .entry .head { margin: 0 0 8px; }
+  .entry { margin: 0 0 32px; }
+  .entry .head { margin: 0 0 10px; }
   .entry .org { font-weight: 600; }
-  .entry .role { font-style: italic; }
+  .entry .role { color: var(--muted); }
   .entry .when {
-    float: right; color: var(--muted); font-size: 15px;
-    font-family: var(--sans);
-    font-variant-numeric: tabular-nums; padding-top: 6px;
+    float: right; color: var(--muted); font-size: 16px;
+    font-variant-numeric: tabular-nums; padding-top: 4px;
   }
   .entry p { margin: 0; }
 
   /* Plain lists */
   ul.refs { list-style: none; padding: 0; margin: 0; }
-  ul.refs li { margin: 0 0 14px; padding-left: 34px; text-indent: -34px; }
+  ul.refs li { margin: 0 0 14px; padding-left: 36px; text-indent: -36px; line-height: 1.5; }
   ul.refs li .idx {
-    display: inline-block; width: 26px; color: var(--muted); font-size: 15px;
-    font-family: var(--sans);
+    display: inline-block; width: 28px; color: var(--muted); font-size: 16px;
     text-indent: 0;
   }
-  ul.refs li .meta { color: var(--muted); font-style: italic; font-size: 16px; }
+  ul.refs li .meta { color: var(--muted); font-size: 16px; }
 
   /* Contact */
-  form { display: grid; gap: 10px; margin-top: 14px; max-width: 520px; }
+  form { display: grid; gap: 12px; margin-top: 16px; max-width: 540px; }
   input, textarea {
-    font: inherit; font-size: 17px; padding: 10px 13px;
-    border: 1px solid var(--rule); border-radius: 2px;
+    font: inherit; font-size: 18px; padding: 11px 14px;
+    border: 1px solid var(--rule); border-radius: 3px;
     background: var(--surface); color: var(--fg); width: 100%;
   }
-  textarea { min-height: 120px; resize: vertical; }
+  textarea { min-height: 130px; resize: vertical; }
   button {
-    font: inherit; font-size: 16px; padding: 9px 20px;
-    border: 1px solid var(--fg); background: transparent; color: var(--fg);
-    border-radius: 2px; cursor: pointer; justify-self: start;
-    letter-spacing: 0.02em;
+    font: inherit; font-size: 17px; padding: 11px 24px; font-weight: 500;
+    border: 1.5px solid var(--fg); background: transparent; color: var(--fg);
+    border-radius: 3px; cursor: pointer; justify-self: start;
     transition: background 0.15s ease, color 0.15s ease;
   }
   button:hover { background: var(--fg); color: var(--bg); }
 
   footer {
-    margin-top: 72px; color: var(--muted); font-size: 14px;
-    font-family: var(--sans);
+    margin-top: 80px; color: var(--muted); font-size: 14px;
   }
 
   @media (max-width: 640px) {
-    body { font-size: 18px; }
-    .wrap { padding: 52px 22px 72px; }
+    body { font-size: 19px; }
+    .wrap { padding: 56px 22px 72px; }
     .theme-toggle { top: 20px; right: 22px; }
-    header { flex-direction: column; gap: 20px; }
-    header img { width: 120px; height: 120px; }
-    header .bio h1 { font-size: 30px; }
-    .entry .when { float: none; display: block; padding-top: 0; margin-bottom: 2px; }
-    .entry .head { margin-bottom: 8px; }
+    header { flex-direction: column; gap: 22px; }
+    header img { width: 128px; height: 128px; }
+    header .bio h1 { font-size: 34px; }
+    header .bio p { font-size: 19px; }
+    .entry .when { float: none; display: block; padding-top: 0; margin-bottom: 4px; }
+    .entry .head { margin-bottom: 10px; }
   }
 </style>
 <script>
@@ -342,16 +341,21 @@
     </li>
   </ul>
 
-  <h2>Elsewhere</h2>
+  <h2>Fun</h2>
   <p>
-    Eight marathons, including Boston in 2020 and 2021.
-    Piano pop-covers and remixes on the side.
+    Eight marathons in the legs so far &mdash; including Boston in 2020 and 2021,
+    which still rank as my best long-run memories. I keep the streak alive on
+    <a href="https://www.strava.com/athletes/15035384" target="_blank" rel="noopener">Strava</a>.
+  </p>
+  <p>
+    When I'm not running or building, I'm at the piano remixing pop covers as
+    <a href="https://pianomixtape.com" target="_blank" rel="noopener">Piano Mixtape</a>.
   </p>
 
   <h2>Contact</h2>
   <p>
-    For collaboration, advisory work, or just to say hi —
-    <a href="mailto:me@anandsampat.com">me@anandsampat.com</a>, or use the form below.
+    For collaboration, advisory work, or just to say hi &mdash; drop a note and
+    it'll land in my inbox.
   </p>
   <form action="https://formspree.io/f/xleyewoo" method="POST">
     <input type="text" name="name" placeholder="Your name" required />
