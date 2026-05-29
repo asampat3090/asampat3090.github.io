@@ -161,6 +161,31 @@
     *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   }
 
+  /* Photo gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 10px;
+    margin: 8px 0 20px;
+  }
+  .gallery figure { margin: 0; position: relative; overflow: hidden; border-radius: 4px; }
+  .gallery img {
+    width: 100%; height: 240px; object-fit: cover; display: block;
+    transition: transform 0.4s ease, filter 0.3s ease;
+    filter: saturate(0.92);
+  }
+  .gallery figure:hover img { transform: scale(1.04); filter: saturate(1.05); }
+
+  /* Inline future-note (small muted) */
+  .note { color: var(--muted); font-size: 17px; }
+
+  @media (max-width: 640px) {
+    .gallery { grid-template-columns: 1fr 1fr; gap: 6px; }
+    .gallery figure:first-child { grid-column: 1 / -1; }
+    .gallery img { height: 200px; }
+    .gallery figure:first-child img { height: 240px; }
+  }
+
   footer {
     margin-top: 80px; color: var(--muted); font-size: 14px;
   }
@@ -357,7 +382,11 @@
   <p>
     I host and write <i>The Good AI Podcast</i> and an accompanying
     newsletter, where I talk with founders and investors building profitable
-    companies with a purpose. Longer pieces on ML systems on Medium.
+    companies with a purpose.
+  </p>
+  <p class="note">
+    A blog of longer essays on ML systems and research is coming soon at
+    <b>blog.anandsampat.com</b>.
   </p>
 
   <h2>Selected publications</h2>
@@ -414,6 +443,17 @@
     which still rank as my best long-run memories. I keep the streak alive on
     <a href="https://www.strava.com/athletes/15035384" target="_blank" rel="noopener">Strava</a>.
   </p>
+  <div class="gallery">
+    <figure>
+      <img src="images/boston1.jpg" alt="Boston Marathon" loading="lazy" decoding="async" />
+    </figure>
+    <figure>
+      <img src="images/boston2.jpg" alt="Boston Marathon" loading="lazy" decoding="async" />
+    </figure>
+    <figure>
+      <img src="images/boston3.jpg" alt="Boston Marathon" loading="lazy" decoding="async" />
+    </figure>
+  </div>
   <p>
     When I'm not running or building, I'm at the piano remixing pop covers as
     <a href="https://pianomixtape.com" target="_blank" rel="noopener">Piano Mixtape</a>.
