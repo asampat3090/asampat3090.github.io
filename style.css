@@ -49,9 +49,9 @@ html[data-theme="dark"] .theme-toggle .moon { display: none; }
 html[data-theme="dark"] .theme-toggle .sun { display: block; }
 
 /* Header */
-header { display: flex; gap: 36px; align-items: flex-start; margin-bottom: 8px; }
+header { display: flex; gap: 36px; align-items: center; margin-bottom: 8px; }
 header img {
-  width: 144px; height: 144px; object-fit: cover; border-radius: 4px;
+  width: 172px; height: 172px; object-fit: cover; border-radius: 6px;
   flex-shrink: 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 14px rgba(0,0,0,0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -314,8 +314,8 @@ footer {
   body { font-size: 19px; }
   .wrap { padding: 56px 22px 72px; }
   .theme-toggle { top: 20px; right: 22px; }
-  header { flex-direction: column; gap: 22px; }
-  header img { width: 128px; height: 128px; }
+  header { flex-direction: column; gap: 22px; align-items: flex-start; }
+  header img { width: 140px; height: 140px; }
   header .bio h1 { font-size: 34px; }
   header .bio p { font-size: 19px; }
   .entry .when { float: none; display: block; padding-top: 0; margin-bottom: 4px; }
