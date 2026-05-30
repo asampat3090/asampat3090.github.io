@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pushing The Needle Forward For Ai Deployments — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Pushing The Needle Forward For Ai Deployments</h1>
+    <p class="post-meta">June 9, 2018</p>
+<blockquote>
+<p>This blog was originally posted on the Datmo Blog on June 9, 2018</p>
+</blockquote>
+
+<p><strong>June 9, 2018</strong></p>
+<p>Original Link: <a href="https://medium.com/datmo/pushing-the-needle-forward-for-ai-deployments-633750c946be">https://medium.com/datmo/pushing-the-needle-forward-for-ai-deployments-633750c946be</a></p>
+<p>At Datmo, we spend a lot of time working to build a better product for customers deploying AI to production, and part of that is ensuring that we are offering the most seamless developer experience possible. While each customer has a unique set of constraints between their model type and production needs, there is one thing consistent for everyone — people want to spend less time on deployments, and more time working on their models and experiments.</p>
+<p>This revelation is nothing particularly new. As explained in <a href="https://blog.heroku.com/why_instant_deployment_matters">more detail</a> by James Lindenbaum (Co-Founder of Heroku), more effective deployment/provisioning developer tools are a critical force multiplier in the fight to accelerate current software lifecycles.</p>
+<p>In the recent history of modern software development, we’ve seen vast improvements in efficiency for developers writing code, and despite great advances in generalized ops and deployment tools, deploying/provisioning have come to constitute an uncomfortably large portion of the model development lifecycle. This is due, in no small part, to a large number of <a href="http://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems.pdf">unique problems AI deployments pose when compared to conventional software</a>.</p>
+<p>When it comes to deployment of models, these unique difficulties are attributable to three major causes unique to models:</p>
+<p><strong>First</strong>, is the tracking and reproduction of environments. When considering the number of model frameworks, language level packages, and system level (GPU/OS) drivers, compounded by compatibility issues for all of their respective versions, it becomes extremely difficult to track, standardize, and reproduce runtime environments.</p>
+<p><strong>Second</strong>, is the need to create a model interface (API) for serving requests, a process almost completely independent from the training that produced the model. To build a truly efficient inference system, a team would need to effectively master the intricacies of the underlying machine learning algorithms as well as the available deployment options.</p>
+<p><strong>Third</strong>, is the differing number of deployment platforms and methods, all of which have their own respective setup and management pains. Similarly, while one deployment method may be optimal for one model, that won’t necessarily be the case for future models. However, in the status quo, each deployment method has its own learning curve, hindering companies from seamlessly switching between them.</p>
+<p>The combination of these three factors creates an extremely large barrier to entry for performant and effective model deployment.</p>
+<p>As a result of these complexities, there have been a startling number of system-level liabilities surfacing in the form of brittle glue code, unmanageable pipeline jungles, dead experimental code paths, improper abstraction debt, and more. In the face of these unique barriers, we see companies struggling to operationalize their first models, or realizing that their approach to continuously deploying models has become unscalable at the speed or breadth they require.</p>
+<p><strong>To us, the path forward is clear:</strong><br/>
+Create a tool that helps bring standardization, speed, and seamlessness to the AI deployment world.</p>
+<p>In setting out to solve for the pain points of AI deployment, we’ve optimized our tool, Datmo, around one concept that encapsulates the value we bring to developers — minimizing Time to Deployment (TTD). Seen as the last mile problem in AI, we know that empowering data scientists and AI engineers to deploy and manage their models will close the development-deployment-iteration loop in a way that unlocks immense value for companies.</p>
+<p>To show you this system, let’s talk about where deployment is today. The manual method of deployment is a long and arduous process. Even once you have your model code, there are still many <a href="https://www.gartner.com/binaries/content/assets/events/keywords/catalyst/catus8/preparing_and_architecting_for_machine_learning.pdf">operationalization steps</a> that stand in the way of data scientists and using their model in production.</p>
+<ol>
+<li>Install and write an API Wrapper for your model with a microframework (Falcon, Flask, Tornado, etc)</li>
+<li>Push your model + API code to a remote source (GitHub, Bitbucket, custom git repo, etc)</li>
+<li>Provision a server on cloud provider of choice</li>
+<li>SSH into a remote server</li>
+<li>Pull code from the source remote to a remote server</li>
+<li>Install GPU/system level utilities/drivers (if applicable)</li>
+<li>Install project dependencies</li>
+<li>Install the WSGI server framework (NGINX, Gunicorn, etc)</li>
+<li>Instantiate WSGI server pointed at API app</li>
+<li>Push process to the background for persistence, exit SSH</li>
+</ol>
+<p>Our first step in minimizing this long process was building datmo snapshots, the initial level of abstraction and the foundational building block for model deployment. We built snapshots to serve as a standalone record for the state of a given model’s code, files, data, metrics, and environments, which are all of the components necessary to reproduce your model elsewhere — all unified within a single entity.</p>
+<p>Snapshots are extremely valuable and are the key to being able to log and reproduce your experiments (both locally and remotely), but after going through the process from the status quo and <a href="https://blog.datmo.com/posts/deploying-a-machine-learning-model-as-a-cloud-api-with-datmo/">writing a blog post on converting models to a cloud API on AWS</a>, we knew that there was more that could be done on the “operationalization” front.</p>
+<p><strong>This leads us to today:</strong></p>
+<p>With our datmo deployment CLI, we have abstracted resource (server/infrastructure) provisioning and model deployment into one simple command. No manual resource provisioning or server-side code meddling required, only a few local config files.</p>
+<p>In fact, it’s so easy that you can do it in two minutes or less. See it in action here:</p>
+<p>From our experience, there are two optimal vectors for deployment — a containerized microservice based solution, as well as a serverless based approach.</p>
+<p><strong>For containerized microservice deployments:</strong></p>
+<ol>
+<li>Add a one-line designator for denoting which function the API route should point to</li>
+<li>Create a Dockerfile (handles system utilities, environments, and package installations)<br/>
+* <a href="https://gist.github.com/shabazpatel/7af7b44a608c85b31101b57cd749de62">Here’s an example</a> of a Dockerfile that covers system-level utility and package installations that we’ve made, feel free to customize it for your own use-cases!<br/>
+* Alternatively, here’s a handy guide to <a href="https://rominirani.com/docker-tutorial-series-writing-a-dockerfile-ce5746617cd">writing one from scratch</a>, no Docker knowledge required!</li>
+<li>Create a <a href="https://gist.github.com/shabazpatel/778176cdea2c20067edf6ed6591f97a7">datmo configuration file</a> (path to Dockerfile and model, as well as desired API route name)</li>
+<li>Datmo deploy command on CLI</li>
+</ol>
+<p><strong>For serverless deployments:</strong></p>
+<ol>
+<li>Add a one-line designator for denoting which function the API route should point to</li>
+<li>Create a serverless deployment package<br/>
+* Here’s a guide to creating one for <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html">AWS Lambda</a>, one of the most popular serverless deployment infrastructure choices.</li>
+<li>Create a <a href="https://gist.github.com/shabazpatel/4edd6696b1992a3d4f8d860bacbdd5e8">serverless datmo configuration file</a> (path to Dockerfile and model, as well as desired API route name)</li>
+<li>Datmo deploy command on CLI</li>
+</ol>
+<p>Once you’ve chosen your method and followed those steps, you’re good to go! Datmo’s tool helps solve all of the provisioning, environment setup, and app deployment, based on your Dockerfile and configuration file. All you need to do is run `$ datmo deploy` and datmo will handle the rest.</p>
+<p><strong>Time to Deployment benchmarks:</strong></p>
+<p>For Time to Deployment, we count the difference in time between when you’ve hit deploy to the moment your API is live and queryable. Below are our baseline Time to Deployments from a cold start (no previously configured/provisioned resources) on AWS for both serverless (<a href="https://aws.amazon.com/lambda/">AWS Lambda</a>) and containerized server deployments (<a href="https://aws.amazon.com/ec2/">on-demand EC2 instances</a>).</p>
+<p>There are two primary deployment types — an initial deployment (which requires provisioning the infrastructure for the code to live on while it’s running), and updates/redeployments (which leverage existing infrastructure you’ve provisioned already). Naturally, the initial deployment will take a little longer, but once that’s out of the way, redeploying new versions of your models is extremely fast.</p>
+<p><strong>Serverless deployments</strong></p>
+<p>One of the best parts about serverless applications on modern cloud platforms is infinite and instantaneous scalability, without having to think about the number of resources you’re provisioning. With one deploy command, datmo helps you reach this goal even faster.</p>
+<p>The deployed serverless prediction code is available <a href="https://gist.github.com/shabazpatel/4a7b91cef2bfd2f90c9e536e7500b2c0">here</a>, along with the additional serverless-specific <a href="https://gist.github.com/shabazpatel/4edd6696b1992a3d4f8d860bacbdd5e8">config file</a>.</p>
+<p><strong>Microservice cluster deployments (CPU)</strong></p>
+<p>While a single deployment can seem very daunting, scaling an application out to a large number of servers is an even more difficult problem. Have no fear, because we’ve designed datmo’s CLI to handle this with ease. With a parameter passed to the CLI at deploy time, datmo will automatically spin up a cluster with any number of servers, all without any additional legwork.</p>
+<p>The full scikit-learn model source code is available <a href="https://gist.github.com/shabazpatel/3d547407a6a3086b62fe085e9931c2f1">here</a>.</p>
+<p><strong>Microservice cluster deployments (GPU)</strong></p>
+<p>Models leveraging GPU-powered prediction or training become even more difficult and time intensive to deploy than their CPU alternatives. However, the same set of steps enable you to achieve similar deployment times despite the added complexity that datmo is handling behind the scenes. Shown below are our results for a standard MXNet implementation of ResNet-152:</p>
+<p>MXNet model source code is taken from the official <a href="https://mxnet.incubator.apache.org/tutorials/python/predict_image.html">Apache tutorial</a>, and available as-used in our tests <a href="https://gist.github.com/shabazpatel/202a21901e34d9a50c504e63fdd86422">here</a>.</p>
+<p>*Note: Lambdas not possible for models of this size (memory limit) as well as GPU compatibility not existing for current cloud serverless implementations.*</p>
+<p><strong>Summary</strong></p>
+<p>TTD Comparison for Iris CPU Model across many servers</p>
+<p>Regardless of what a given model’s optimal deployment method is, datmo’s deployment tools can help you every step of the way — from initial deployment to continuous deployment at scale.</p>
+<p><strong>Enterprise-ready:</strong><br/>
+In short, we care a lot about how we can make the lives of data scientists and AI engineers better, and optimizing TTD is one of the biggest ways we have seen ourselves able to do that, offering a consistent and seamless experience whether you’re deploying your first model or your hundredth. And just as your needs grow over time, we’re confident to say we’re building for the future of the industry, to grow right alongside you by offering:</p>
+<p>- Decoupled serving architecture and model predictions by having a layered architecture for deployment, simplifying model packaging and deployment for the data scientist.<br/>
+- Caching, authentication, and scalability for deployed models with varying throughputs.<br/>
+- Support for a concurrent serving of multiple models, using any number of AI frameworks or cloud providers.</p>
+<p>We know that when it comes to the enterprise stage, the process of deployment isn’t binary — there’s so much more involved. That’s why all of our benchmarks are run on our turn-key enterprise solution, where each deployment comes out of the box with:</p>
+<p>* Job queueing (microservice deployment method)<br/>
+* Task scheduling<br/>
+* REST API/stream/batch request building<br/>
+* Environment image reproducibility (containerization)<br/>
+* App initialization<br/>
+* Request load balancing</p>
+<p>We sweat the small details because we know from firsthand experience that an AI pipeline is only as strong as its’ weakest link, and business value can only be accessed if the entire system works like a well-oiled machine from end to end. Interested in our product, or having trouble with machine learning in production? <a href="https://datmo.com/contact-us">We’d love to chat</a>.</p>
+<p>Concept Dependencies</p>
+<ul>
+<li><a href="20170915-learning-data-science-you-may-already-know-the-basics.html" data-slug="20170915-learning-data-science-you-may-already-know-the-basics">20170915-learning-data-science-you-may-already-know-the-basics</a></li>
+</ul>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

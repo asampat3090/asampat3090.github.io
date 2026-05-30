@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coming Soon! — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Coming Soon!</h1>
+    <p class="post-meta">July 28, 2023</p>
+<p>Original Link: <a href="https://musicalai.substack.com/p/coming-soon">https://musicalai.substack.com/p/coming-soon</a></p>
+
+<h2 id="to-my-personal-blog-and-musings-on-ai-music-and-my-favorite-topics">to my personal blog and musings on AI, music and my favorite topics.</h2>
+<p><strong>July 28, 2023</strong></p>
+<p>This is Muse-ical AI because this blog will follow my musings - not always organized and perhaps a bit haphazard, but generally centered around philosophy, computer science, machine learning, technology, music and the intersection of all of these topics. Stable diffusion described it simply in this picture…you be the judge on whether it captures the essence :)</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22f4ec7b-3649-4261-8e7c-548d6c6b04ae_768x768.jpeg"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22f4ec7b-3649-4261-8e7c-548d6c6b04ae_768x768.jpeg" alt/></a></p>
+
+<p>More musings to come!</p>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

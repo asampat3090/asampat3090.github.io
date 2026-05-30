@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🎙️#19: VP of Data Science - Shabaz Patel @ One Concern — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>🎙️#19: VP of Data Science - Shabaz Patel @ One Concern</h1>
+    <p class="post-meta">December 12, 2023</p>
+<p>original link: <a href="https://thegoodaipod.substack.com/p/19-vp-of-data-science-shabaz-patel">https://thegoodaipod.substack.com/p/19-vp-of-data-science-shabaz-patel</a></p>
+
+<h2 id="climate-ai-and-the-genai-wave">Climate AI and the GenAI Wave</h2>
+<p><strong>Dec 12, 2023</strong></p>
+<p>Happy Monday!!! We’re back with another episode of the Good AI podcast - this time we sat down with a friend of mine and previous co-founder, <a href="https://www.linkedin.com/in/shabazbpatel/">Shabaz Patel</a> who currently leads the Data Science team at [<a href="https://open.substack.com/pub/oneconcern">One Concern</a>](<a href="https://oneconcern.com">https://oneconcern.com</a>) to discuss the meaning of Good AI for Climate! The timing of this post happens to coincide perfectly with <a href="https://nips.cc/"></a>NeurIPS 2023, one of the biggest ML conferences in the year and a time where the top ML researchers and thought leaders meet to present their research, learn from each other and decide what to work on next.</p>
+<p>In this podcast, we’re chatting with one of those researchers,</p>
+<p><a href="https://open.substack.com/users/3278485-shabaz-patel?utm_source=mentions">Shabaz Patel</a></p>
+<p>, who is driving novel climate analytics that build resilience for communities and enable creation of infrastructure to make businesses and economic systems resilient to natural disasters. While climate tech certainly fits the Good AI bill, we explored a bit further into what Good AI really means and what technologists can do to mitigate the effects of bad actors when releasing new tech. As always, check out the video below, short clips on <strong><a href="https://www.instagram.com/thegoodaipod">Instagram</a> or <a href="https://www.tiktok.com/@thegoodaipod">TikTok</a></strong> or listen on your favorite podcast platform.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbb29c2c9-028d-4361-89a4-8c4f7a786dca_2296x1210.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbb29c2c9-028d-4361-89a4-8c4f7a786dca_2296x1210.png" alt/></a></p>
+<h2 id="ml-stack-at">ML Stack at</h2>
+<p><a href="https://open.substack.com/pub/oneconcern">One Concern</a></p>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=QstpZzBTTziQRrprlbMKTA&amp;t=28&amp;context=spotify%3Ashow%3A4ZpKwhV1xihtsJzcOeKu9R">0:25</a></strong> ] The Technical Stack at One Concern is all based on Google Cloud.</p>
+<ul>
+<li>
+<p>Data Sets (public and private): stored via semantic versioning in GCS buckets.</p>
+</li>
+<li>
+<p>Models: Jupyter notebooks within K8s (GKE) to build and experiment with models</p>
+</li>
+<li>
+<p>Continual Data Pipelines: Argo is used to manage workflows</p>
+</li>
+<li>
+<p>CI / CD : cloud-based CircleCI</p>
+</li>
+<li>
+<p>Monitoring Data Stream: <a href="https://greatexpectations.io/">Great Expectations</a> to monitor data quality</p>
+<ul>
+<li>Data Scientists will review any anomalies</li>
+</ul>
+</li>
+<li>
+<p>Data Storage: Postgres for static DB Snowflake enables easy data manipulation</p>
+</li>
+</ul>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=2JIW9KiGQ2q-rVenIys76g&amp;t=446&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD">7:25</a></strong> ] What ML Models do you use and where they are used throughout the stack?</p>
+<ul>
+<li>
+<p>Data Imputation and Cleanup</p>
+<ul>
+<li>
+<p>Semi-supervised techniques to generate attributes of the building (e.g. building types, construction material, etc.)</p>
+</li>
+<li>
+<p>Network based models to generate power network graphs which represent the grid and are useful inputs to business downtime models.</p>
+</li>
+<li>
+<p>ViTs for object detection via satellite and google maps imagery to fill in the details of building features and nodes in a network.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>End-Customer ML Models</p>
+<ul>
+<li>Physics+ML models to calculate the damage to buildings and propagating that effect to calculate business downtime from natural disasters.</li>
+</ul>
+</li>
+</ul>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=EYllt-EcS8i7ErJSTN8sHw&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD&amp;t=791">13:10</a></strong> ] How does One Concern contribute to creating a better world - Good AI?</p>
+<ul>
+<li>
+<p>The incidence of natural disasters is increasing every day, and risk is continuing to increase. Hence, climate change is top of mind for all businesses</p>
+</li>
+<li>
+<p>Disclosures are also being enforced by governments and consortiums forcing a shift to renewable sources of energy.</p>
+</li>
+<li>
+<p>One Concern quantifies the risk profile associated with a changing climate and increased natural disaster risk, which forces companies to shift toward renewable and reliable sources of energy (e.g. power backups) so they can build a more sustainable business and reduce their overall risk profile.</p>
+</li>
+</ul>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=E-4cYmGAQfSYxhsA1Zq2GQ&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD&amp;t=1158">19:20</a></strong> ] Can you give an example of precision mitigation that businesses might take after using One Concern?</p>
+<ul>
+<li>Dunkin’ Donuts in Miami have $2M to invest and they want to identify the highest ROI location to invest in precision mitigation over the next 10-20 years depending on their time horizon. One Concern quantifies the reduced value at risk from adding mitigations like metal shutters or flood bags to locations to make more granular investment decisions.</li>
+</ul>
+<h2 id="ai-risks">AI Risks</h2>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=7LYr0E8ASJelPwzYNvl7pQ&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD&amp;t=1277">21:20</a></strong> ] What are the risks with this AI technology? Is there a way mitigate these risks?</p>
+<ul>
+<li>
+<p>Bad actors are always a danger for any new technology - One Concern identifies vulnerabilities in the system which could be used to exploit those most in need.</p>
+</li>
+<li>
+<p>Mitigating the bad uses of technology are possible but <em>incentives aren’t always there</em> - government can play a role in setting rules around the technology.</p>
+<ul>
+<li>Will regulatory capture only benefit the large companies who lobby for their businesses? This is not clear, which is why a balance between government and private consortiums.</li>
+</ul>
+</li>
+<li>
+<p>Good practices and guidelines are as important as the outcomes of the model. Having a balance of both process and outcomes regulation is more practical.</p>
+</li>
+</ul>
+<h2 id="ai-regulation">AI Regulation</h2>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=AIzlzt5IQTCxY2_e8Pr9KA&amp;t=1640&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD">27:20</a></strong> ] Regulated use case example: PaLM-Med is a language model focused on answering medical questions from patients or doctors.</p>
+<ul>
+<li>
+<p>Model is limited even though it can perform well on the USMLE exams and requires a human in the loop to mitigate its worst effects</p>
+</li>
+<li>
+<p>Regulation for high stakes use case is critical because medical models, self-driving models and other scenarios have their own nuances.</p>
+</li>
+<li>
+<p>Industry consortiums are another way to ensure adherence to good practices and in many ways can be more effective since peers are working together rather than adversarially as with most government regulation.</p>
+</li>
+</ul>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=H95v9pcQTm6Xg_4qpUATzg&amp;t=1919&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD">32:00</a></strong> ] AGI and what it means for us today - are we really doomed or are there more benefits to be had with narrow models?</p>
+<ul>
+<li>Within the ML space, there are still disagreements on whether our current architectures can get us to AGI or whether we have already achieved it in some ways via agents.</li>
+</ul>
+<h2 id="advice-for-the-audience-who-want-to-make-an-impact">Advice for the Audience who want to make an impact</h2>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=4MhP2ASYSBayfXOPaKvdOw&amp;t=2050&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD">34:10</a></strong> ] What is your advice for an audience that’s interested in doing something positive in the AI space? What do you wish you would have known 5 or 10 years ago?</p>
+<ul>
+<li>
+<p>Model evolutions are hard to predict - but we have predictability over the 1-2 years. Invest in those techniques today and finding a burning customer need that they can solve.</p>
+</li>
+<li>
+<p>Thinking about the next 5-6 years is good but only a small portion of folks need to do that and it is a high risk endeavor. Customer needs today abound leaving many more opportunities for success. Technologies can always be replaced.</p>
+</li>
+</ul>
+<h2 id="ai--climate-opportunities-on-the-horizon">AI + Climate Opportunities on the Horizon</h2>
+<p>[ <strong><a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD?si=wAivNODPTgO5AshKIXJIEg&amp;context=spotify%3Aepisode%3A3AlCj0yAyEYxsSSjo2Q7yD&amp;t=2290">38:10</a></strong> ] What are the opportunities for AI technologies for Climate and more broadly?</p>
+<ul>
+<li>
+<p>Political refugees are currently a big challenge, but climate-based refugees are a problem not too far on the horizon due to displacement from areas on the globe that will become uninhabitable in the near future. Identifying and addressing this challenge can help prevent a crisis in the future.</p>
+<ul>
+<li>Examples: predict this and address it early, if preventable, identify scientific advancements to slow down this process, AI can help in both of these scenarios.</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<p>Hope you enjoyed this episode! If you’re interested in listening to the pod subscribe on <a href="https://open.spotify.com/episode/3AlCj0yAyEYxsSSjo2Q7yD">Spotify</a>, <a href="https://podcasts.apple.com/us/podcast/the-good-ai-podcast/id1524406767?i=1000633560376">Apple Podcasts</a> or if you want to watch <a href="https://www.youtube.com/@thegoodaipod">subscribe on Youtube</a>!</p>
+
+<p>✌🏽Anand</p>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Musing #1: Music Creation with AI — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Musing #1: Music Creation with AI</h1>
+    <p class="post-meta">July 29, 2023</p>
+<p>Original Link: <a href="https://musicalai.substack.com/p/musing-1-music-creation-with-ai">https://musicalai.substack.com/p/musing-1-music-creation-with-ai</a></p>
+
+<h2 id="human-creativity-meets-technological-progress-in-gen-ai">Human creativity meets technological progress in Gen AI</h2>
+<p><strong>July 29, 2023</strong></p>
+<p>Music in many ways has been intertwined with the progress of society and technology. We started with our voices, and slowly built other means to create music from drums, stringed-instruments the world over like the sitar, veena, erhu, shamisen, and eventually complex instruments like harpsichords, pianos and harmoniums.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6e37e87-56cf-469d-8bfe-9e1d5353a0fe_400x419.jpeg"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6e37e87-56cf-469d-8bfe-9e1d5353a0fe_400x419.jpeg" alt/></a></p>
+<p>But there were just the beginning, in the last 150 years since the advent of electricity, using electronic instruments have been the in-thing. Most of our music enjoy the benefits of this technological explosion. Of course that doesn’t mean we don’t enjoy a fancy pianoforte (if the interstellar theme is any indication below) - but even those are often mastered to make them sound perfect (no acoustical blips)</p>
+
+
+<p>Most of the music we listen to is synthesized in DAWs (digital audio workstations) and mastered to make them sound perfect to our ears. As a human species with computational tools we have mastered the ability to craft exactly the waveform we want. Yet we still don’t have a perfect objective for consonance and dissonance.</p>
+<p>So when it comes to creating music from scratch often we still start with the same fundamentals - chords, melodies and samples. These samples can come from other musicians we jam with, or songs we listen to everyday. Chords and melodies have some fundamentals in Eastern and Western classical music, we generally can use chord progressions we know are consonant.</p>
+<p>Once we have these basic components we can put any filter on these and modulate these waveforms however we want</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5cab4715-e852-4404-bb02-721b70167557_1000x404.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5cab4715-e852-4404-bb02-721b70167557_1000x404.png" alt/></a></p>
+<p>Now, where does that leave us with AI — well, AI is definitely a different beast. The mathematical cascade of functions that make up <a href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformers</a> or any deep learning model, initially was meant to emulate the neurons in our brain, but has created a whole new mechanism for creating music.</p>
+<p>Neural networks imitate humans very well but do not think like them — let’s try a <a href="https://huggingface.co/spaces/ShibaDeveloper/Text-To-Image">text-to-image decoder</a>, <a href="https://huggingface.co/spaces/Voicemod/Text-To-Speech">text-to-speech decoder</a> and <a href="https://huggingface.co/spaces/facebook/MusicGen">text-to-music decoder</a> to demonstrate with a simple prompt: “a calming beach scene with waves crashing against the shore”.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F608acd15-b928-4b83-8fe3-70ed4feb8264_512x512.jpeg"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F608acd15-b928-4b83-8fe3-70ed4feb8264_512x512.jpeg" alt/></a>a calming beach scene with waves crashing against the shore</p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-1-music-creation-with-ai">original post</a>.</span></p>
+<p>Agatha speaking ‘a calming beach scene with waves crashing against the shore’ aloud.</p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-1-music-creation-with-ai">original post</a>.</span></p>
+<p>‘a calming beach scene with waves crashing against the shore’ as interpreted by a decoder.</p>
+<p>Well, it’s not too bad, many of the text and language encoders have a deep understanding of these concepts like “calming, beach, etc” and these concepts are quite common in the unsupervised pre-training data of these encoders. And since each of these models use a variation of those, it’s not surprising to see it doing a good job. Of the 3 however, music is the one that seems to not quite match what I was looking for. <em><strong>It is chill and repetitive with a rhythm and beat like music should be, but it doesn’t have that organic wave crashing sound I was looking for.</strong></em></p>
+<p>It’s safe to say to Music as a medium is more complex and nuanced and language is not often the means by which we describe it. That is, data that describes music in detail is not as widespread, so while language encodings are helpful, mapping them to sequential outputs in a spectrogram is not as straightforward.</p>
+<blockquote>
+<p><strong>Musicians create music by “jamming” with each other — going back and forth with different musical samples with language as a guide to direct attention rather than fully describe a piece of music.</strong></p>
+</blockquote>
+<p>So…with this in mind, how can we leverage the latest in generative AI? Well, first we should try a small project to test out whether it can generate useful music. I’ll start with creating some Lofi Bollywood Music since I enjoy it and will explore how generative models can help me in the process. I have no idea where this will take me….but I hope eventually we can develop representations that enable musicians to “jam” with AI in a productive way to expand possibilities and create “better” (as defined by humans) music.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd5eb3a64-901f-461f-a8b7-df836ef36d93_480x263.gif"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd5eb3a64-901f-461f-a8b7-df836ef36d93_480x263.gif" alt/></a></p>
+<p>To be continued…..</p>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

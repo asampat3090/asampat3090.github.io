@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tracking And Reproducibility In Data Projects — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Tracking And Reproducibility In Data Projects</h1>
+    <p class="post-meta">May 5, 2017</p>
+<p><strong>May 5, 2017</strong></p>
+<p>Original Link: <a href="https://medium.com/datmo/tracking-and-reproducibility-in-data-projects-af64ce109774">https://medium.com/datmo/tracking-and-reproducibility-in-data-projects-af64ce109774</a></p>
+<p>Documenting your work is necessary, but boring, regardless of the type of work you do. While tracking and reproducing work for most generic web-connected applications and workflows is becoming more standardized (i.e., document state-saving and tracking through Google Docs and code version control system like Github) there is currently no widely accepted standard or simple automation for data science and machine learning. This is not to say developers and data scientists don’t track their work, but their process tends to be rinse and repeat, time-consuming, and rarely automated.</p>
+<p>complex, time-consuming, and precarious process</p>
+<p>Not only is keeping track of the state of your work an important part of getting things done, but automating and observing best practices in tracking also drives better productivity and collaboration. Below, we propose some best practices and an open source system for solving tracking and reproducibility when working with data and machine learning. Furthermore, we introduce a new way to automate this process. Let’s start with the goals that we strive to achieve.</p>
+<h1 id="tracking-goals">Tracking Goals</h1>
+<ol>
+<li>Prevent lost history of your trained models, configurations, metrics, and environments</li>
+<li>Ensure accurate reporting of results</li>
+<li>Avoid errors when repeating, learning from, and reproducing someone else’s work (or even your own work!)</li>
+</ol>
+<p>Broadly we can categorize tracking in data projects into 5 sections: code, configurations, environments, performance metrics, and files. Below we break down the current workflow and problems with it, some best practices for handling these workflows and the Datmo equivalents for the best practices.</p>
+<h1 id="tracking-problems-with-existing-solutions"><strong>Tracking Problems with Existing Solutions</strong></h1>
+<h1 id="best-practices-with-existing-solutions"><strong>Best Practices with Existing Solutions</strong></h1>
+<h1 id="datmo-solution"><strong>Datmo Solution</strong></h1>
+<p>Keeping track of workflows while working with and modeling data shouldn’t be like pulling teeth. Datmo’s simple command-line interface takes into account the common workflows and best practices that data scientists and developers are used to, and automates the entire tracking process.</p>
+<p>More specifically, Datmo enables tracking all 5 components above via Snapshots of models. In addition, Datmo enables simple orchestration of tasks and runs to ensure replicability of snapshots across machines. Datmo provides 2 main value propositions:</p>
+<ul>
+<li>Tracks models via snapshots, which are points in time of a trained model</li>
+<li>Enables orchestration for running tasks run in parallel and maintaining isolated results</li>
+</ul>
+<p>Datmo’s CLI along with GUI platform allows you to <strong>build,</strong> <strong>track, share,</strong> and <strong>collaborate</strong> on data projects. This allows collaborators to see all of the work you did, including snapshots and task runs. These collaborators can now improve, comment and work on new experiments from there improving the way everyone works on their data projects.</p>
+<p>If you want to get access and play around with our Datmo CLI and GUI, click <a href="https://datmo.com">here</a>, sign up, and send an email to me at <a href="http://anand@datmo.com">anand@datmo.com</a> and I’ll be sure to send you an invite code :).</p>
+<p>We hope no one will ever have to deal with the issue of tracking work manually ever again. Looking forward to your feedback!</p>
+<p>Check out our simple Iris Classification demo below:</p>
+<p>Signup to our newsletter at <a href="https://datmo.io/">https://datmo.com/</a> to get updates on our progress and tips on how to improve your workflow.</p>
+<p><em>P.S. Thanks for reading this far! If you found value in this, We’d really appreciate it if you recommend this post (by clapping below) so other people can see it!.</em></p>
+<p>Concept Dependencies:</p>
+<ul>
+<li><a href="20170418-building-artificial-intelligence-together.html" data-slug="20170418-building-artificial-intelligence-together">20170418-building-artificial-intelligence-together</a></li>
+</ul>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

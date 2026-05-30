@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Musing #2: AI-powered Lofi Bollywood Music? — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Musing #2: AI-powered Lofi Bollywood Music?</h1>
+    <p class="post-meta">July 30, 2023</p>
+<p>Original Link: <a href="https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood">https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood</a></p>
+
+<h2 id="will-ai-help-or-hurt-the-creative-process">Will AI help or hurt the creative process?</h2>
+<p><strong>July 30, 2023</strong></p>
+<p>Lofi Music Generation - Can AI really make music better? I decided to combine my passion for music and ML to explore this in 4 steps. You can check out the results below, peruse my video of the experiment flow and take a look at the <a href="https://colab.research.google.com/drive/1sI8Y66M-FbAIGSUHQlbqNAdkB4r31USJ#scrollTo=5pVjuyeZXYAe">google colab</a> for code details and to try it yourself!</p>
+<p><a href="https://www.loom.com/share/5a4f0bffb32d4d9b874194d81310b21c?sid=c9ed7641-16b2-4204-9880-a1637aa695ec">Loom Video Link (Attached Video Below) </a></p>
+
+
+<p>My goal was to create a lofi bollywood sample so I started where you might expect…with the data.</p>
+<ol>
+<li>_ <strong>Data Gathering &amp; Finetuning</strong>_: I gathered ~150 lofi bollywood w/ ~2.5k clips of 30 seconds with simple descriptions to finetune the decoder of the <a href="https://hackernoon.com/musicgen-from-meta-ai-understanding-model-architecture-vector-quantization-and-model-conditioning">MusicGen models</a> for 5 epochs. The core idea behind MusicGen (vs. previous generators) is that it added text and melody conditioning.</li>
+</ol>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3e57b4d2-cd7f-4432-8c98-783ac2d54e19_720x342.jpeg"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3e57b4d2-cd7f-4432-8c98-783ac2d54e19_720x342.jpeg" alt/></a></p>
+<p>The original model was trained on 20k hours across all genres, but I’m doubtful lofi bollywood played a role (see the Original Model link below). The original 300M param model did a great job creating indian instrumentals like the sitar and tabla but did not create a lofi vibe. In order to help this model along, I decided finetuning could help and so collected my own dataset w/ 20.8 hours (1/1000x of the original), and finetuned the 300M param model (due to limited GPU compute) however I did see a noticeable improvement when prompting the original and finetuned 300M param (limited GPU compute) MusicGen model with “indian lofi beat with eastern instrumentals” in terms outputting a lofi vibe.</p>
+<p><em><strong>Original Model (AI) :<a href="https://voca.ro/1dRCve3mCCg1">https://voca.ro/1dRCve3mCCg1</a></strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood">original post</a>.</span></p>
+<p><em><strong>Finetuned Model (AI) :<a href="https://voca.ro/1fbsdfT1dObF">https://voca.ro/1fbsdfT1dObF</a></strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood">original post</a>.</span></p>
+<ol start="2">
+<li>_ <strong>Manual Intervention</strong>_ : To create a somewhat fair comparison, I aimed to use the AI as a human and focus on music continuation, by giving it a bit of music and see how it extends it. But first…I made a few modifications in Ableton - especially around the speed, crackle and adding indian instruments like a sitar and percussion.</li>
+</ol>
+<p><em><strong>My Edited Clip (AI + Human):<a href="https://voca.ro/1fRBVK6utNT3">https://voca.ro/1fRBVK6utNT3</a></strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood">original post</a>.</span></p>
+<ol start="3">
+<li>_ <strong>Music Continuation</strong>_ : Prompted the finetuned model with 10 second clip of my edition to see what the last 10 seconds might sound like. Needless to say…it left much to be desired.</li>
+</ol>
+<p><em><strong>Audio-only Continuation (AI):<a href="https://voca.ro/1eciGnvUcyle">https://voca.ro/1eciGnvUcyle</a></strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood">original post</a>.</span></p>
+<ol start="4">
+<li>_ <strong>Music Continuation (w/ text)</strong> :_ Prompted the finetuned model with a 5 second clip of my edition and a text prompt “chill relaxed indian lofi with soft vocals and a tabla”. After the first 5 seconds it adds an interesting twist to the song.</li>
+</ol>
+<p><em><strong>Audio + Text Continuation (AI):<a href="https://voca.ro/170HqVp3eHDW">https://voca.ro/170HqVp3eHDW</a></strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-2-ai-powered-lofi-bollywood">original post</a>.</span></p>
+<p>The human ear is the best discriminator for consonance vs. dissonance and well…the music continuation wasn’t great without text prompting and even then it was interesting but quality <em><strong>could still be improved</strong></em>.</p>
+<blockquote>
+<p>MusicGen was helpful in seeding an initial musical idea <em>and</em> extending an idea and transitioning to a new beat and ending a song (albeit not my initial intention). However, the work needed to obtain this was not worth the effort for most musicians, so a few things could be improved</p>
+<ul>
+<li>
+<p><em><strong>Reducing friction is key to making this a viable sample generator during the creative process</strong></em></p>
+</li>
+<li>
+<p><em><strong>For longer form generation, stringing outputs together is likely the most computationally viable way to make generative AI a useful tool</strong></em></p>
+</li>
+<li>
+<p><em><strong>Audio quality is still not great from many of these outputs, but for production level audio a sound engineering pipeline will need to accompany these outputs</strong></em></p>
+</li>
+</ul>
+</blockquote>
+<p>This was a very simple experiment, but musicians rarely use language to describe music in the development process — instead we “jam” with other musicians going back-and-forth with samples. Given all of this I have some ideas for where to go from here.</p>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>
+<p>Share code and notebooks from this experiment to see what others get</p>
+</li>
+<li>
+<p>Test other transformer-based music encoder-decoder architectures (e.g. <a href="https://google-research.github.io/seanet/musiclm/examples/">MusicLM</a>) and diffusion models (<a href="https://www.riffusion.com/">Riffusion</a>)</p>
+</li>
+<li>
+<p>Extend the lofi dataset and acquire more GPU resources to train deeper models.</p>
+</li>
+<li>
+<p>String together models to create an organic “jam” session and longer samples (especially using language as an intermediate representation)</p>
+</li>
+</ul>
+<p>I have no idea where this is going, but I’m excited to see where it takes me and if nothing else, I’ll hopefully create my own “jam buddy” to expand my creative process.</p>
+<h2 id="references-and-credits">References and Credits:</h2>
+<ul>
+<li>
+<p>MusicGen HF: <a href="https://huggingface.co/spaces/facebook/MusicGen">https://huggingface.co/spaces/facebook/MusicGen</a></p>
+</li>
+<li>
+<p>MusicGen Github: <a href="https://github.com/facebookresearch/audiocraft">https://github.com/facebookresearch/audiocraft</a></p>
+</li>
+<li>
+<p>MusicGen Trainer (c/o neverix): <a href="https://github.com/neverix/musicgen_trainer/tree/main">https://github.com/neverix/musicgen_trainer/tree/main</a></p>
+</li>
+</ul>
+<hr/>
+<p>Stay tuned for more…</p>
+<p>✌🏽</p>
+
+<p><a href="20230729-musing-1-music-creation-with-ai.html" data-slug="20230729-musing-1-music-creation-with-ai">20230729-musing-1-music-creation-with-ai</a></p>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

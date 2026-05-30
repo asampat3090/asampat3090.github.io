@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Musing #3: 🎹 MIDI Representations &amp; AI 🤖- A History &amp; Tutorial — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Musing #3: 🎹 MIDI Representations &amp; AI 🤖- A History &amp; Tutorial</h1>
+    <p class="post-meta">September 14, 2023</p>
+<p>Original Link: <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">https://musicalai.substack.com/p/musing-3-midi-representations-and</a></p>
+
+<h2 id="introducing-the-format-that-powers-music-production-ai-midi-generation-models-over-the-years-and-how-to-format-midi-files-to-work-with-them">introducing the format that powers music production, AI MIDI generation models over the years, and how to format MIDI files to work with them</h2>
+<p><strong>Sep 14, 2023</strong></p>
+<p>MIDI as a protocol was <a href="https://en.wikipedia.org/wiki/MIDI#:~:text=The%20MIDI%20specification%20was%20published,6%20and%20the%20Prophet%20600.">developed in 1983 </a> to standardize musical notes and pitches across musical instruments. It enabled drums, pianos, synths and everything in between to be represented in a standard discretized format, which made digital instruments possible. Of course since then there has been lots of work trying to convert MIDI instruments to sound like real sounds to simplify recording. MIDI enabled a number of use cases at that time:</p>
+<ul>
+<li>
+<p>musicians can create melodies and drums without having to record in a studio (quiet atmosphere and perfect sound isolation) since you can posthoc process sounds to match the pitch.</p>
+</li>
+<li>
+<p>different instruments can interact - you can create a melody in one instrument (even a computer keyboard) and modify it on another</p>
+</li>
+<li>
+<p>simplified and democratized music production by enabling a common language, expanding the range of possible sounds for music producers and expanding the reach of music production capabilities.</p>
+</li>
+</ul>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F065fd2ba-b58d-4fcb-9543-82e0c197a579_314x216.gif"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F065fd2ba-b58d-4fcb-9543-82e0c197a579_314x216.gif" alt/></a></p>
+<p><em><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb">Follow Along in the Google Colab</a></strong></em></p>
+<p>This post is pretty long…but the hope is that after this you will have learned the following:</p>
+<ol>
+<li>
+<p><strong>What is a MIDI file and how to manipulate it in python at a basic level?</strong></p>
+</li>
+<li>
+<p><strong>What are some of seminal MIDI Generation papers and what MIDI representations do they use for training / inference?</strong></p>
+</li>
+<li>
+<p><strong>How to convert MIDI files to these various formats for use in these models?</strong></p>
+</li>
+</ol>
+<p>If you’re only interested in some of the above, jump to the section below and click on the <strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb">Google Colab link</a></strong> to take you directly to that section in the notebook. All of our notebooks and code for <strong><a href="https://github.com/asampat3090/musicalai">this blog are also on Github</a></strong></p>
+<p>Enjoy!</p>
+<h2 id="midi-basics">MIDI Basics</h2>
+<p>Turns out that MIDI’s discrete nature also makes it much easier to represent as a matrix and to leverage in machine learning models to predict the next sequence. MIDI is used in every Digital Audio Workstation (DAW) as Ableton, Garageband, Logic Pro, etc. for music production, and so musicians are also very familiar with working with these tools. Let’s first take a look at what a MIDI file is…</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1339575b-6680-4cc6-a917-612a5e4afd74_3006x1870.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1339575b-6680-4cc6-a917-612a5e4afd74_3006x1870.png" alt/></a>Ableton DAW w/ multiple midi tracks</p>
+<p>MIDI files consist of a bunch of messages in sequential order, and can represent 128 different pitches at various intervals, durations and velocities. The files themselves are in byte-encodings so reading them in a text editor doesn’t yield much, but python libraries like <code>mido</code> provide a simple way to parse these messages. Since it’s not required for our exploration, the interested reader can <a href="https://ccrma.stanford.edu/CCRMA/Courses/AlgoComp/cm/doc/dict/midi_messages.tpc.html">read about byte-encodings here</a>.</p>
+<blockquote>
+<p><em><strong>Quick Side Note</strong> : throughout this post I use 3 key python libraries for working with MIDI files each with their own pros/cons. You can find more details here: <em><code>mido </code></em>(<a href="https://mido.readthedocs.io">link</a>)</em><code>, pretty_midi</code> <em>(<a href="https://craffel.github.io/pretty-midi/">link</a>)</em><code>, pypianoroll</code> <em>(<a href="https://salu133445.github.io/pypianoroll/doc.html">link</a>)</em></p>
+</blockquote>
+<h3 id="example-track-roja-by-ar-rahman"><strong>Example Track (“Roja” by A.R. Rahman)</strong></h3>
+<p>We use a simple melody from the <a href="https://www.hooktheory.com/theorytab">TheoryTab dataset</a>, which has both melody and chords for thousands of songs. We downloaded the melody for “Roja” which looks something like this:</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb1d6e12e-aa70-41cf-89db-e593f0061d9a_1528x346.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb1d6e12e-aa70-41cf-89db-e593f0061d9a_1528x346.png" alt/></a></p>
+<p>You can also visualize these in standard musical notation using a tool like <a href="https://musescore.com/">MuseScore</a></p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6dbd4ba-940f-4b13-9f6c-b4dfe384e0b8_1968x1348.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6dbd4ba-940f-4b13-9f6c-b4dfe384e0b8_1968x1348.png" alt/></a>MuseScore rendition of the midi file</p>
+<p>In true MIDI form, we assign any instrument we want to this to create a sound from the MIDI file. Here are a few examples:</p>
+<p><em><strong>Piano</strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">original post</a>.</span></p>
+<p><em><strong>Mandolin</strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">original post</a>.</span></p>
+<p><em><strong>String-Ensemble Synth (Audio Recording - has some ambient noise)</strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">original post</a>.</span></p>
+<h2 id="exploring-midi-file-structure">Exploring MIDI File Structure</h2>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=mFZ_HV2EyAOD">Google Colab Link to Section</a></strong></p>
+<p>A MIDI file is a combo of messages which look something like below. We use <code>mido </code>to parse and print out the messages via python. More details in the Colab, but here’s a quick preview. Put simply, there are meta messages and musical messages, where meta messages set things like time signature, key signature, tempo, etc. while musical messages specify specific the pitch, velocity and duration of notes to be played. MIDI files keep time using “ticks” which, based on tempo, time signature and BPM can be converted into seconds.</p>
+<pre><code>MidiFile(type=1, ticks_per_beat=480, tracks=[
+  MidiTrack([
+    MetaMessage('set_tempo', tempo=631579, time=0),
+    MetaMessage('time_signature', numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0),
+    MetaMessage('key_signature', key='E', time=0),
+    MetaMessage('marker', text='4_4_m_5_', time=0),
+    MetaMessage('marker', text='11_11__5_', time=960),
+    ...
+    MetaMessage('marker', text='4_4__5_', time=960),
+    MetaMessage('marker', text='9_9__5_', time=960),
+    MetaMessage('marker', text='11_11__5_', time=960),
+    MetaMessage('end_of_track', time=1)]),
+]),
+  MidiTrack([
+    MetaMessage('track_name', name='melody', time=0),
+    Message('program_change', channel=0, program=0, time=0),
+    Message('note_on', channel=0, note=64, velocity=80, time=0),
+    Message('note_on', channel=0, note=64, velocity=0, time=480),
+    Message('note_on', channel=0, note=67, velocity=80, time=0),
+    ...
+    Message('note_on', channel=0, note=67, velocity=0, time=0),
+    Message('note_on', channel=0, note=66, velocity=0, time=480),
+    MetaMessage('end_of_track', time=1)])
+])
+</code></pre>
+<p>In <a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=mFZ_HV2EyAOD">this section of the Colab</a> we go message-by-message and interpret them to gain an appreciation for the way these files work (and perhaps a motivation for why certain representations are used in MIDI generation models).</p>
+<h2 id="midi-generation-models---through-the-years">MIDI Generation Models - Through the Years</h2>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=fUEqtfdjb7Id">Google Colab Link to Section</a></strong></p>
+<p>If we look at some of the core papers looking at MIDI generation there have been a number in the past few years - I won’t try to be completely comprehensive here but I will note some of the important ones. The most notable ones in ~chronological order are (and coincidently, though unsurprisingly, grouped by models which correspond to the most popular types of models at the time):</p>
+<p><em><strong>RNN-Based</strong></em></p>
+<ul>
+<li><strong>MelodyRNN (Jul 2016) [Paper,<a href="https://github.com/magenta/magenta/blob/main/magenta/models/melody_rnn/README.md">Code</a>, <a href="https://magenta.tensorflow.org/2016/07/15/lookback-rnn-attention-rnn/">Website</a>]</strong>: LSTM based model for MIDI inputs</li>
+</ul>
+<pre><code>* Derivatives: DrumsRNN, ImprovRNN, PerformanceRNN, MusicRNN
+</code></pre>
+<ul>
+<li><strong>DeepBach (Dec 2016) [<a href="https://arxiv.org/abs/1612.01010">Paper</a>, <a href="https://github.com/Ghadjeres/DeepBach">Code</a>, <a href="https://sites.google.com/site/deepbachexamples/">Website</a>]</strong>: a Steerable Model for Bach Chorales Generation</li>
+</ul>
+<p><em><strong>GAN-Based</strong></em></p>
+<ul>
+<li>
+<p><strong>MidiNet (Mar 2017)</strong> <strong>[<a href="https://arxiv.org/abs/1703.10847v2">Paper</a>, <a href="https://github.com/RichardYang40148/MidiNet">Code</a>, Website]</strong>: Convolutional GAN-based sequential prediction of MIDI nodes with conditioning options for chord sequences and melody of previous bars</p>
+</li>
+<li>
+<p><strong>MuseGAN (~2017)</strong> <strong>[<a href="https://salu133445.github.io/musegan/papers">Papers</a>, <a href="https://github.com/salu133445/musegan">Code</a>, <a href="https://salu133445.github.io/musegan/">Website</a>]</strong>: GAN-based model for generating multi-track MIDI files</p>
+</li>
+</ul>
+<p><em><strong>VAE-Based</strong></em></p>
+<ul>
+<li><strong>MusicVAE (Mar 2018) [<a href="https://arxiv.org/abs/1803.05428">Paper</a>, <a href="https://github.com/magenta/magenta/tree/main/magenta/models/music_vae">Code</a>, <a href="https://magenta.tensorflow.org/music-vae">Website</a>]</strong>: Interpolate between two 16 bar midi notes for smoothness, realism and expression</li>
+</ul>
+<pre><code>* Derivatives: GrooVAE
+</code></pre>
+<p><em><strong>Transformer-Based</strong></em></p>
+<ul>
+<li>
+<p><strong>Music Transformer (Dec 2018) [<a href="https://arxiv.org/abs/1809.04281">Paper</a>, <a href="https://github.com/magenta/magenta/tree/main/magenta/models/score2perf">Code</a>, <a href="https://magenta.tensorflow.org/music-transformer">Website</a>]</strong>: Transformer-based model for generating multi-track MIDI files</p>
+</li>
+<li>
+<p><strong>MuseNet (~2019)</strong> <strong>[Paper, Code,<a href="https://openai.com/research/musenet">Website</a>]</strong>: GPT-2 based model for generating multi-track MIDI files</p>
+</li>
+</ul>
+<p>Most importantly, they all use some form of a sequence as an input for training and inference. What we’ll focus on first, is the question: <strong>what format do these models expect the input to be in?</strong></p>
+<p><strong>NOTE: We are explicitly ignoring the question of preprocessing datasets (i.e. what format do datasets come in and how to transform them), which we will defer to the next post since it is important for training these sequence models above or creating our own to craft a training set which may include multiple sources that need to be standardized to a single input format. For now, we assume we have a MIDI file present as above and convert them to a format usable for training. We will also defer augmentation and other adjustments (e.g. transposition, tempo adjustments, etc.) to the next post where we’ll discuss considerations for training the models.</strong></p>
+<h3 id="binary-piano-roll-representations">Binary Piano Roll Representations</h3>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=zpU-gGpwyAOJ">Google Colab Link to Section</a></strong></p>
+<p>The piano roll representation is a common way to represent music data. It consists of a two-dimensional matrix where the rows represent time steps and the columns represent pitches (and special symbols in certain variations). The entries of the matrix are often non-negative.</p>
+<p>One example is when the entries are binary, indicating whether a note is played at a given time step and pitch.</p>
+<p>X ∈ {0, 1}^(h×w) where <code>h</code> is the number of pitches and <code>w</code> is the number of time steps.</p>
+<p><em>NOTE: velocity and complex time signature differences are IGNORED in this version!</em></p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0579227a-ada3-462d-b4c2-1c51137cff04_363x362.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0579227a-ada3-462d-b4c2-1c51137cff04_363x362.png" alt/></a> binary pianoroll representation</p>
+<p>Another variation on this form also considers the velocity of the note. In this case, the entries are integers in the range of 0-127 indicating the velocity of the note played at a given time step and pitch. In this first section, we will talk about the models that look at only the binary piano roll representation, but will revisit the velocity in the next section.</p>
+<p>X ∈ [0,127]^(h×w)</p>
+<p><strong>NOTE: The number of pitches in a MIDI file is 128, however the dimension of</strong><code>h</code> <strong>may be reduced to narrow the range of notes to a specific instrument (e.g. 88 keys in a piano) or can be expanded to include silence or rests (e.g. 129/130 or 89/90). The time steps also depend on the model and level of granularity desired. For coherence, many models filter inputs to 4/4 time signatures and use sixteenth notes as a single time step (16 steps / bar).</strong></p>
+<p>For the RNN-Based, GAN-Based and VAE-Based models above, at some level all of these look at splitting the MIDI files into discrete time bars and ignoring the velocity. However they vary in how they split the bars and the granularity of notes they use.</p>
+<p><em><strong>RNN-Based</strong></em></p>
+<ul>
+<li>
+<p><strong>MelodyRNN</strong> : “[60, -2, 60, -2, 67, -2, 67, -2]” (-2 = no event, -1=note-off event, 0-127 = note-on event for that MIDI pitch) for each track. 4/4 time signature with 16th notes as a single time step. Each bar has 16 time steps. Samples can be 2 bars or 16 bars.</p>
+</li>
+<li>
+<p><strong>DeepBach</strong> : 4 tracks/rows (soprano, alto, tenor, bass) with 16 time steps per bar (16th notes) represented by strings for the 128 pitches <code>C1</code> to <code>G9</code> and a hold <code>__</code> (i.e. 129 total pitches), two additional rows are added with <code>0</code> or <code>1</code> to indicate fermata and the beat count (e.g. <code>1,2,3,4</code>)</p>
+</li>
+</ul>
+<p><em><strong>GAN-Based</strong></em></p>
+<ul>
+<li>
+<p><strong>MidiNet</strong> : piano roll representation in 4/4 time signature with 16th notes as a single time step. Each track is a new channel (e.g. CxHxW). Each sample is 1 bar and each value can be one of 128 MIDI pitches or silence resulting in a Cx129x16 matrix for each bar.</p>
+</li>
+<li>
+<p><strong>MuseGAN</strong> : piano roll representation in 4/4 time signature with 16th notes as 6 time steps. That is each bar has 96 time steps. Each track is a new channel and each sample is 1 bar (e.g. CxHxW). Each value can be one of 128 MIDI pitches resulting in Cx128x96 matrix for each bar. The dimensions are rearranged to be 96x128xC.</p>
+</li>
+</ul>
+<p><em><strong>VAE-Based</strong></em></p>
+<ul>
+<li><strong>MusicVAE</strong> : “[60, -2, 60, -2, 67, -2, 67, -2]” (-2 = no event, -1=note-off event, 0-127 = note-on event for that MIDI pitch) for each track. 4/4 time signature with 16th notes as a single time step. Each bar has 16 time steps. Samples can be 2 bars or 16 bars.</li>
+</ul>
+<p><strong>Observations:</strong></p>
+<ul>
+<li>
+<p>All of these models use 4/4 time signature and a 16th note or some subset of them as a time step. This is likely because it helps with standardization and structure of the data. For examples if we processed 6/8 or 5/4 time signatures and split them with the same time steps as 4/4, we would capture motifs that span bars which may not be consistent. And since the majority of pieces are 4/4, it is advantageous to use that time signature and discard others.</p>
+</li>
+<li>
+<p>All representations discard the velocity of the notes. This is likely because it is not as important for the melody and the models then not as sensitive to it, that is, there is less to learn. Velocity variations could also be added posthoc to make the outputs seem more realistic.</p>
+</li>
+<li>
+<p>Representations of the matrix are still highly variable and depends on the model, the DL library (TF, Pytorch, etc) and the application. We’ll next explore code to transform MIDI files to these formats. For the above models we’ll focus on the following 3 common formats which were most common:</p>
+<ol>
+<li>
+<p>Compressed Piano Roll Representation w/ Pitch Indices (CxW): MelodyRNN, MusicVAE</p>
+</li>
+<li>
+<p>Compressed Piano Roll Representation w/ Note Names (CxW): DeepBach</p>
+</li>
+<li>
+<p>One/Multi-Hot Piano Roll Representations (CxHxW): MidiNet, MuseGAN</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="1-compressed-piano-roll-representation-w-pitch-indices-cxw">1. Compressed Piano Roll Representation w/ Pitch Indices (CxW)</h4>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=pYamTlYxyAOJ">Google Colab Link to Section</a></strong></p>
+<p>These representations are used commonly by the Google Magenta team across MelodyRNN and MusicVAE and represent each time step with an absolute pitch index <code>0-127</code> rather than a 1-hot or multi-hot encoding. Since it is can only represent 1 note per time step, the channels or <code>C</code> dimension enable multiple instruments or notes to be represented. We ignored the -1 note-off event and defaulted to -2 for no event for time steps where the note is not playing.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc3336af0-3fa4-479e-890b-1fd74830a11c_696x461.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc3336af0-3fa4-479e-890b-1fd74830a11c_696x461.png" alt/></a></p>
+<h4 id="2-compressed-piano-roll-representation-w-note-names-cxw">2. Compressed Piano Roll Representation w/ Note Names (CxW)</h4>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=GDCRbYqAyAOJ">Google Colab Link to Section</a></strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=GDCRbYqAyAOJ"> </a></p>
+<p>Here we use a very similar approach to above, but convert the notes and like it is described in DeepBach, we use the <code>__</code> symbol for a hold where there are no notes playing.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F69b99da2-3e0d-484a-91a8-1733be442f43_684x575.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F69b99da2-3e0d-484a-91a8-1733be442f43_684x575.png" alt/></a></p>
+<h4 id="3-onemulti-hot-piano-roll-representations-cxhxw">3. One/Multi-Hot Piano Roll Representations (CxHxW)</h4>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=FuJ-2CvLyAOJ">Google Colab Link to Section</a></strong></p>
+<p>The one/multi-hot piano roll representation is the classic representation used by MidiNet and MuseGAN and ignore the velocity which means that the piano roll representation they adhere too is the binary one: X ∈ {0, 1}^(H×W) as shown above in the binary piano roll format.</p>
+<p>Here the output of the piano roll will be a matrix with 128 rows (H) to signify the 128 different pitch levels (note a piano only has 88). The columns (W) will be the time steps. The values will be 1 or 0 to signify whether the note is played or not as a one-hot encoding.</p>
+<p>We can define a simple function to convert a MIDI file to this simple format. We’ll use the <code>pretty_midi</code> library to parse the MIDI file and then use the <code>pypianoroll</code> library to convert it to a piano roll representation.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F330344b0-2b9b-47b3-8ca3-9657dce7f68e_888x567.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F330344b0-2b9b-47b3-8ca3-9657dce7f68e_888x567.png" alt/></a></p>
+<h3 id="expressive-piano-roll--language-based-representations">Expressive Piano Roll &amp; Language-Based Representations</h3>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=KJ2tIUF3yAOT">Google Colab Link to Section</a></strong></p>
+<p>Following in the footsteps of recent language models, transformer based models can use more expressive piano roll and language-based encodings to represent the MIDI files. In particular, language modeling has often used byte-pair encodings (BPE) to represent words as a sequence of bytes. This is a great way to represent words because it allows for a variable length encoding of words and allows for the model to learn sub-word representations.</p>
+<p>Let’s explore what the Transformer based models use to represent MIDI files.</p>
+<p><em><strong>Transformer-Based</strong></em></p>
+<ul>
+<li><strong>Music Transformer (Google)</strong> : Multiple formats for different datasets and experiments</li>
+</ul>
+<pre><code>* JS Chorales Bach: (similar to DeepBach) uses the following sequence of 4 voices (soprano, alto, tenor, bass) in 4/4 time in sixteenth note increments
+</code></pre>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F822c3dbf-9c39-466a-b60f-23dcca592c88_687x183.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F822c3dbf-9c39-466a-b60f-23dcca592c88_687x183.png" alt/></a></p>
+<pre><code>  * Inputs are serialized $S_1A_1T_1B_1S_2A_2T_2B_2$ and each token is represented as a one-hot vector → 128 x (WxC) where W is number of sixteenth notes and C is the number of channels - in this case 4 for each voice
+
+* Piano E Competition Dataset: [Ref: [https://arxiv.org/pdf/1808.03715.pdf]](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Farxiv.org%2Fpdf%2F1808.03715.pdf%255D) → Use a set of sequence events like the following.
+</code></pre>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F409c4986-a8c1-4e11-84bb-551bd917412a_630x119.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F409c4986-a8c1-4e11-84bb-551bd917412a_630x119.png" alt/></a></p>
+<pre><code>  * Overall the total number of sequences are eventually represented as a sequence of 1-hot vectors representing each of the 388 possible events -> 388 x T where T is the the number of 10ms increments in the sample. This representation for the Piano competition dataset is discussed in section 6.1 of [this paper](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs00521-018-3758-9).
+
+    * 128 `NOTE-ON` events: one for each of the 128 MIDI pitches. Each one starts a new note.
+
+    * 128 `NOTE-OFF` events: one for each of the 128 MIDI pitches. Each one releases a note.
+
+    * 100 `TIME-SHIFT` events: each one moves the time step forward by increments of 10 ms up to 1 s.
+
+    * 32 `VELOCITY` events: each one changes the velocity applied to all subsequent notes (until the next velocity event).
+</code></pre>
+<ul>
+<li><strong>MuseNet (OpenAI)</strong> : <code>bach piano_strings start tempo90 piano:v72:G1 piano:v72:G2 piano:v72:B4 piano:v72:D4 violin:v80:G4 piano:v72:G4 piano:v72:B5 piano:v72:D5 wait:12 piano:v0:B5 wait:5 piano:v72:D5 wait:12 piano:v0:D5 wait:4 piano:v0:G1 piano:v0:G2 piano:v0:B4 piano:v0:D4 violin:v0:G4 piano:v0:G4 wait:1 piano:v72:G5 wait:12 piano:v0:G5 wait:5 piano:v72:D5 wait:12 piano:v0:D5 wait:5 piano:v72:B5 wait:12</code></li>
+</ul>
+<p><strong>Observations:</strong></p>
+<ul>
+<li>
+<p>Transformer-based model representations are more flexible and leverage expressivity (velocity) and polyphonicity.</p>
+</li>
+<li>
+<p>Transformer-based model representations only require sequential processing but are open to using one-hot vectors (i.e. pianoroll representations) as well as language based ones (i.e. MuseNet).</p>
+</li>
+<li>
+<p>Representations can be broken down in the following ways:</p>
+<ol>
+<li>
+<p>One-hot Binary Piano Roll Representations (128x(WxC)): Music Transformer (JS Chorales Bach)</p>
+</li>
+<li>
+<p>One-hot Expressive Piano Roll Representations (388xW): Music Transformer (Piano E Competition)</p>
+</li>
+<li>
+<p>Sequential Encoding &amp; Tokenization (???): MuseNet</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="1-one-hot-binary-piano-roll-representations-128xwxc">1. One-hot Binary Piano Roll Representations (128x(WxC))</h4>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=qlqchJeSyAOT">Google Colab Link to Section</a></strong></p>
+<p>This is not too dissimilar from our previous work on representations except that it allows for combining the channels from different instruments into 1 dimension which means that W (the time dimension) and C (the channel dimension) are combined. It also means that an encoder and decoder must be present to identify these differences. Given we only have 1 track, the output will not be any different for our trial MIDI file, however we define a function that would work for multiple tracks. Our second dimension is WxC (in our case 1680x1=1680)</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff320d477-8700-4949-8401-1287f87bf362_709x439.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff320d477-8700-4949-8401-1287f87bf362_709x439.png" alt/></a></p>
+<h4 id="2-one-hot-expressive-representation-388xw---1-track">2. One-hot Expressive Representation (388xW) - 1 Track</h4>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=vESJ75VeyAOU">Google Colab Link to Section</a></strong></p>
+<p>This is a unique approach because it takes into account timing and velocity. It is also a one-hot representation, but it is not a piano roll representation. Instead it is a sequence of events that are encoded as one-hot vectors. To recap, the events we care about are:</p>
+<ul>
+<li>
+<p>128 <code>NOTE-ON</code> events: one for each of the 128 MIDI pitches. Each one starts a new note.</p>
+</li>
+<li>
+<p>128 <code>NOTE-OFF</code> events: one for each of the 128 MIDI pitches. Each one releases a note. <code>NOTE-ON</code> with velocity 0 is equivalent to <code>NOTE-OFF</code>.</p>
+</li>
+<li>
+<p>100 <code>TIME-SHIFT</code> events: each one moves the time step forward by increments of 10 ms up to 1 s.</p>
+</li>
+<li>
+<p>32 <code>VELOCITY</code> events: each one changes the velocity applied to all subsequent notes (until the next velocity event).</p>
+</li>
+</ul>
+<p>Our MIDI file is fairly standard in that it has just 1 velocity across all monophonic notes. Therefore, we will see very standard representations for this. However, if we had a more expressive MIDI file with multiple instruments and velocities, we would see more <code>VELOCITY</code> events. You might have noticed that we could add more events here to the vocabulary to expand the 1-hot representation to include other musical events like <code>TEMPO</code> or <code>KEY_SIGNATURE</code> or <code>TIME_SIGNATURE</code> or <code>PROGRAM_CHANGE</code> or <code>CONTROL_CHANGE</code> (e.g. pedal, levers,etc.) or <code>PITCH_WHEEL</code>, etc. However, we’ll leave that for a future post. These are the events used in Musical Transformer.</p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75303c69-602e-4012-923e-1cc0594dd00c_529x858.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75303c69-602e-4012-923e-1cc0594dd00c_529x858.png" alt/></a></p>
+<h4 id="3-sequential-encoding--tokenization-">3. Sequential Encoding &amp; Tokenization (???)</h4>
+<p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=PRnOLawXyAOU">Google Colab Link to Section</a></strong></p>
+<p>While MuseNet was one of the most interesting applications of MIDI-based music generation using GPT-2 and Sparse Transformers, the <a href="https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fopenai.com%2Fresearch%2Fmusenet">blog post</a> was “sparse” in its explanation of the encoding. Since the tokens were not explained I am not entirely sure how to convert the language sequence provided to discrete tokens to train a model (e.g. byte-pair encoding). We’ll use some combination of expressive representations in 2 and 3 to train our own transformer-based model in a future post.</p>
+<p>For now, we’ll write some code to convert a MIDI file to a format similar to the one mentioned in their blog post - all timings in ticks and all notes in MIDI pitch values.:</p>
+<p><code>bach piano_strings start tempo90 piano:v72:G1 piano:v72:G2 piano:v72:B4 piano:v72:D4 violin:v80:G4 piano:v72:G4 piano:v72:B5 piano:v72:D5 wait:12 piano:v0:B5 wait:5 piano:v72:D5 wait:12 piano:v0:D5 wait:4 piano:v0:G1 piano:v0:G2 piano:v0:B4 piano:v0:D4 violin:v0:G4 piano:v0:G4 wait:1 piano:v72:G5 wait:12 piano:v0:G5 wait:5 piano:v72:D5 wait:12 piano:v0:D5 wait:5 piano:v72:B5 wait:12</code></p>
+<p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fce1d4072-b922-47f1-adea-b73d47ecacda_866x740.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fce1d4072-b922-47f1-adea-b73d47ecacda_866x740.png" alt/></a></p>
+<h2 id="conclusions">Conclusions</h2>
+<p>MIDI data is definitely here to stay! In the last 40 years it has gone from creating robotic like synthetic sounds, so the basis of all modern compositions (i.e. it would be hard to find any music producer today who doesn’t use MIDI for at least some tracks and layers). If you’ve made it this far, 👏🏽 <strong>CONGRATS</strong>! 🎉 By now, you should be able to answer these questions.</p>
+<ol>
+<li>
+<p><strong>What is a MIDI file and how to manipulate it in python at a basic level?</strong></p>
+</li>
+<li>
+<p><strong>What are some of seminal MIDI Generation papers and what MIDI representations do they use for training / inference?</strong></p>
+</li>
+<li>
+<p><strong>How to convert MIDI files to these various formats for use in these models?</strong></p>
+</li>
+</ol>
+<p>In addition, I had a few observations from this post which will hopefully be useful in our following posts.</p>
+<ol>
+<li>
+<p><strong>MIDI Outputs Sound Real</strong> : MIDI outputs can easily sound crisp when interpreted by Digital Audio Workstations (e.g. Ableton Live, Garageband, etc) because digital instruments have gotten very sophisticated, emulating timbre, bass and even the mechanical sounds of instruments.</p>
+</li>
+<li>
+<p><strong>Transformer Models Represent Long Term Structure Best</strong> : MIDI models have been around for a long time, though in the last 5 years they have blown up with progress in sequential models from RNNs, GANs, VAEs and Transformers. The naturally sequential nature of MIDI files has been a perfect match which is shown in the impressive improvement in performance over time, with transformer-based models leading the pack in expressiveness because the sequences leverage velocity, polyphonicity and the dynamics of MIDI instruments. Transformer models have also shown to represent long term structure (unsurprising given similar results in language) on subjective human evaluations, <em><strong>making transformers the leading candidate for future models</strong></em>.</p>
+</li>
+<li>
+<p><strong>MIDI Model Tensor Data Formats are Disparate</strong> : MIDI-based Music Generation data models use <em><strong>very different</strong></em> formats where each is nearly bespoke for each model. While many great python tools like <code>pypianoroll</code> , <code>pretty_midi</code>, and <code>mido</code> exist, there isn’t an easy way to convert back-and-forth between standard MIDI formats and the different formats used for models. We believe this is because the datasets used (i.e. monophonic like our melody, polyphonic classical, polyphonic rock, multi-track, etc) also play a large part in the ways the model developers consider how to represent inputs and how they discretized the time steps.</p>
+</li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<p>In this post, we assume we have 1 MIDI file, but real training datasets can have a diversity of information and parsing and cleaning them, requires further consideration. Given our conclusions, here are a few next steps:</p>
+<ol>
+<li>
+<p>Explore building MIDI generation training datasets by parsing and cleaning open source MIDI data as well as creating our own. In the process, develop a simple library to transform between data formats and tensor formats.</p>
+</li>
+<li>
+<p>Train our own models to create our own compositions by taking a deeper dive into MIDI generation models, esp. transformer models since they are flexible and we can experiment with the latest architectures being used for language modeling. We can also choose to use the same encodings as the models above or we can experiment with other encodings that express similar or even additional information and see how models respond to those additional parameters.</p>
+</li>
+</ol>
+
+
+<hr/>
+<p>Until next time</p>
+<p>✌🏽 Anand</p>
+<p><a href="20230730-musing-2-ai-powered-lofi-bollywood.html" data-slug="20230730-musing-2-ai-powered-lofi-bollywood">20230730-musing-2-ai-powered-lofi-bollywood</a></p>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Learning Data Science You May Already Know The Basics — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Learning Data Science You May Already Know The Basics</h1>
+    <p class="post-meta">September 15, 2017</p>
+<p><strong>September 15, 2017</strong></p>
+<p>Original Link: <a href="https://medium.com/datmo/learning-data-science-you-may-already-know-the-basics-64c9d764bcbb">https://medium.com/datmo/learning-data-science-you-may-already-know-the-basics-64c9d764bcbb</a></p>
+<p>There are countless people trying to get into data science lately, but many are intimidated by the idea of learning a new workflow. In just the last year alone, the number of people reading about and interacting with machine learning has jumped from ~100k in 2016 to over 10 million in 2017 worldwide.</p>
+<p>The two biggest camps of people learning data science are software engineers looking to learn about quantitative development, and quantitative-oriented mathematicians and statisticians looking to scale their analysis and impact using machine learning (ML) and advanced analysis.</p>
+<p>For software engineers, there are actually a lot of similarities to the “plan-build-test-deploy” (PBTD) process that you already know well.</p>
+<p>The PBTD loop you already know and love</p>
+<p>We’re going to break down the data science development and production pipeline, and show how you can leverage the knowledge you already have about the PBTD workflow to hit the ground running.</p>
+<blockquote>
+<p>Data Science follows the same PBTD loop you already know and love.</p>
+</blockquote>
+<p>Data Science and Software Development follow the same loops.</p>
+<p>While the process looks the same at the high level, there are some specifics that make data science slightly different.</p>
+<h1 id="plan">Plan</h1>
+<blockquote>
+<p>“Every extra minute spent planning is 10 minutes less spent debugging”</p>
+</blockquote>
+<p>Planning with a team</p>
+<p>Data science, just like any task, requires planning; much like software engineering, developing a specification is part of the game. Here are the key steps:</p>
+<p><strong>Identify business needs and create metrics:</strong> leverage business stakeholder knowledge to identify business needs and translate those needs into metrics that can be reliably measured. Machine learning needs certain values to minimize or maximize to assess its effectiveness.</p>
+<p><strong>Design experiments:</strong> come up with a set of experiments to generate the metrics you care about and identify the algorithms you need to use to get the desired results.</p>
+<h1 id="build">Build</h1>
+<p>Building and iterating is a constant process</p>
+<p>Once you’ve come up with a plan, you can start to build your system. In software engineering this is is where you write your app’s code. In data science it’s just a few more steps:</p>
+<p><strong>Environment setup:</strong> Based on the algorithm and experiment architecture you planned for, identify the library and framework dependencies you have (e.g. numpy, pandas, Python 2.7, TensorFlow, etc). Then set it up on the required hardware (local vs. distributed solutions).</p>
+<p><strong>Data Exploration</strong>: Explore the data tables or sources that can help generate the metrics you care about. This is where you clean your data, extract relavent variables, and engineer features that will be fed as inputs into your machine learning algorithm.</p>
+<p><strong>Model Generation</strong>: Write the code that executes the algorithm you have chosen. This is the crux of the data science process and has a few key components:</p>
+<ul>
+<li><strong>Algorithm selection</strong>: select the model that makes most sense e.g. linear regression, random forests, neural network, etc.</li>
+<li><strong>Debugging:</strong> The model only works if the code that generate it can execute your algorithm and data cleaning steps without error. This can manifest as a runtime/compilation error or a functional error which may process data incorrectly and thus result in a broken model.</li>
+<li><strong>Optimization:</strong> All data analysis, including machine learning algorithms, are optimizations without a global maxima or minima. That’s just fancy parlance for saying it is not guaranteed you will get an answer in a given time. Unlike software engineering where you are programming functions with <em>deterministic</em> outputs, here, these processes are <em>non-deterministic.</em> In order to optimize, you will need to tune <a href="https://en.wikipedia.org/wiki/Hyperparameter_(machine_learning)">hyperparameters</a> which teach the machine learning optimization function to calculate the best “weights” by minimizing a variable known as the  <a href="https://en.wikipedia.org/wiki/Loss_function"><em>loss function</em></a>. We can think of this as a <strong>“compilation”</strong> step of data science. In software engineering, this step turns our code into binary machine language, in data science the data is turned into “weights” of the model via this optimization process.</li>
+</ul>
+<h1 id="test">Test</h1>
+<p>Testing your work</p>
+<p>Testing in software comes in <a href="https://en.wikipedia.org/wiki/Software_testing">many different forms</a>. For data science, there are a few types which are particularly relevant.</p>
+<ul>
+<li><strong>Unit testing:</strong> we can test a trained model by checking if the data we’re working with in our production pipeline is compatible with the model we have trained during the Build phase. By testing with real data outside of that which was used to train the model, we’ll get a better idea of whether outliers or strange data points return unexpected results from our trained model.</li>
+<li><strong>Integration testing:</strong> we can test how well the trained model behaves within the ecosystem of our product. For example, if the trained model is expecting data with a particular schema, does it parse it properly and return outcomes as expected based on the understanding of the model when we built it? In practice, this would look like a picture color recognition model erroring because one of the parameters it was accidentally passed was the date of origin. Containerization and microservices help make this possible (see Deployment below for details).</li>
+<li><strong>Performance/Stress testing:</strong> Much like in software engineering, we check the worst case scenario to test performance. For code we have the compilation time (which has become negligible in most cases) and big-O notation to connote computational complexity for runtime. In data science we use the training time and testing time as indicators. How does model training runtime compare to less greedy optimization methods? How does the model testing runtime compare to simpler models with fewer weights? The additional runtime of more complex models does not always translate to much better performance, and is sometimes not worth the large increase in runtime.</li>
+</ul>
+<h1 id="deploy">Deploy</h1>
+<p>Once we have tested the trained model, we push it to production, similar to software engineering. There are many tools for deploying production code, all built around the ability to track changes with git commits. For data science projects, there is a huge void in deployment tools, as only the largest technology companies have the resources required to build proprietary in-house solutions. Datmo is building the platform and CLI that solves these problems specifically for data science and machine learning development. Drawing parallels to SWE, here are the key components</p>
+<ul>
+<li><strong>Version control</strong> : Datmo is like Git for data projects — revert to prior models, share it with others, and compare results</li>
+<li><strong>Provisioning microservices :</strong> Provision servers and containers specifically for the exact model you want to work with</li>
+<li><strong>Continuous Integration :</strong> Prior to deployment, you can run the tests mentioned above to ensure the trained model works before pushing the microservice to production — no interruption of service!</li>
+</ul>
+<h1 id="lets-see-it-in-action">Let’s see it in action</h1>
+<p>Harry Potter Sorting Hat</p>
+<p>We’ll walk you through this process for a simple model — a sorting hat! You will provide a selfie / picture of your face and the sorting hat will sort you into the appropriate Hogwarts house!</p>
+<ul>
+<li><strong>Plan:</strong> We are going to build a model with a single image as an input and the output will be a set of 4 categories: Hufflepuff, Gryffindor, Slytherin, and Ravenclaw. We will use a feature extractor on the image and port the result into a logistic regression classifier. Our training data will come from a set of images and houses of Harry Potter characters.</li>
+<li><strong>Build:</strong> We will use Python and Scikit-learn to implement our algorithm. Then we will run the training images through the feature extractor and train the classifier.</li>
+<li><strong>Test:</strong> From the training test we will hold out a small subset and will test on that validation set during our training to validate it works. Then we will have a set of new images to see how they perform — since I don’t know any wizards or have a real sorting hat to corroborate, I can’t provide a quantitative measure for my integration tests.</li>
+<li><strong>Deploy:</strong> Create a prediction function that is translated to a simple RESTful API and deploy it locally on my server with an open port for others to access.</li>
+</ul>
+<p>If you like what we’re doing at <a href="https://datmo.com">Datmo</a>, show us some love by Clapping, sharing the story, and signing up for <a href="https://datmo.com/signup">Datmo</a> :)</p>
+<p>Concept Dependencies</p>
+<ul>
+<li><a href="20170604-part-1-deploying-machine-learning-in-production.html" data-slug="20170604-part-1-deploying-machine-learning-in-production">20170604-part-1-deploying-machine-learning-in-production</a></li>
+</ul>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

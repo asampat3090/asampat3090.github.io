@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Part 1 Deploying Machine Learning In Production — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>Part 1 Deploying Machine Learning In Production</h1>
+    <p class="post-meta">June 4, 2017</p>
+<p><strong>June 4, 2017</strong></p>
+<p>Original Link: <a href="https://medium.com/datmo/part-1-deploying-machine-learning-in-production-5b00d3a92553">https://medium.com/datmo/part-1-deploying-machine-learning-in-production-5b00d3a92553</a></p>
+<p>Building and deploying machine learning models for enterprise use cases can be time consuming, tricky, and even political within an organization. The technology is exciting — predictive intelligence and classification, for example, have great disruptive potential and enable organizations to build competitive advantages with their own data. Before putting data and models to work, however, one must consider the iterative development and versioning, deployment orchestration, and feedback cycle in the context of the application and the teams responsible for making it work.</p>
+<h1 id="the-ideal-lifecycle-of-model-deployment--iteration"><strong>The Ideal Lifecycle of Model Deployment &amp; Iteration</strong></h1>
+<p>For example, let’s say I run an e-commerce business and have been tracking conversion data to build a recommendation algorithm. I might want to answer the question: what products should I send to a user via email or social media to inspire a new purchase? Then I can define the problem as utilizing user information and outputting the likelihood of a given customer to convert on a particular product. Once I have the problem definition, I have to identify and mobilize the right teams to figure out a solution. Part of finding the right people means making sure you have people who can gather the data, select the models, format the data, train the models, and iterate until you have a satisfactory solution.</p>
+<p>Once you have that, you finally get the deployment where the goal is to deploy my model as a RESTful API or a microservice so it can be easily plugged into the current enterprise workflow. I can easily run analyses in batch to determine conversions or in some cases, I may also want to to continuously train my system using historical and new user data along with a ground truth value of whether or not they converted. When doing all of this, I want to run my model on real data, iterate, and analyze results to see if my recommendations increase user engagement and conversion. Based on the data I generate from the results, I can then reassess and refine my problem or I can feed the data into a continuous learning loop.</p>
+<p>Companies like Google, Facebook, and Microsoft are in the process or have already assembled teams, including people responsible for machine learning development, infrastructure and product so that they can create loops to take full advantage of machine learning in all of their products. In our experience even the biggest and most innovative organizations in the world haven’t fully figured out how to co-ordinate and collaborate between these teams, so they can effectively build and deploy machine learning solutions to production. The ones who have addressed this collaboration problem head on are starting to reap the benefits. Think products like Google search and photos, Facebook newsfeed and recommendations, and Uber’s routing algorithms.</p>
+<p>Our definitions of a model deployment in this article really encapsulate 2 major concepts: 1) the static machine learning model which you might choose during Model Selection, but most importantly 2) the features, weights, and meta information associated with it. What this means is that every time you train a model, a new snapshot is created which includes all of the meta information. When we deploy a model we really mean we are taking one snapshot of it and running it in production and when we go through the loop one more (or many more) times, we create new snapshots that improve performance over time.</p>
+<p>As for the process, <strong>Model Deployment a two part process (and both parts are equally important):</strong></p>
+<ol>
+<li><strong>Production Deployment:</strong> Generally a machine learning model, in order to work in production, must be scalable, accurate, and simple.</li>
+</ol>
+<ul>
+<li>Unfortunately, in many enterprises, data science and dev ops teams are separate entities, which results in a lag in deploying RESTful APIs or microservices.</li>
+</ul>
+<ol start="2">
+<li><strong>Analysis and Monitoring</strong>: Track the performance of AI models on a continuous stream of data to find out what works best and iterate.</li>
+</ol>
+<ul>
+<li>Again, because dev ops and analytics teams might be separate, there is no single “source of truth” to tell each team what is working.</li>
+</ul>
+<p>This two part process must happen in unison while keeping teams on the same page. We have observed that getting the right teams to work together in this collaborative process with all parties in sync is the biggest barrier to deploying effective machine learning systems into production.</p>
+<h1 id="what-enterprise-machine-learning-deployment-really-looks-like-today"><strong>What Enterprise Machine Learning Deployment Really Looks Like Today</strong></h1>
+<p>Many large and data driven companies have built (or are building) extensive pipelines and internal workflow tools to handle this lifecycle. Unfortunately, the process is often disjoint across teams and maintaining the workflow is not scalable. Below are the key problems faced in creating a pipeline today and the teams that deal with them:</p>
+<p><strong>Data Preprocessing</strong></p>
+<ul>
+<li>Data gathering and munging is done for every analysis. No easy way to reproduce.</li>
+</ul>
+<p><strong>Model Development</strong></p>
+<ul>
+<li>Creating and training models is manual and slow, performance is evaluated individually. Checking hyper parameters is manual and not well documented. Other stakeholders are unable to see results on the fly.</li>
+</ul>
+<p><strong>Resource Coordination</strong></p>
+<ul>
+<li>Model training requires orchestration and quick experimentation using different configuration parameters.</li>
+</ul>
+<p><strong>Model Validation</strong></p>
+<ul>
+<li>Validate that the model is working and meets the KPIs needed for the product by testing it on real live validation sets and improving the model on the fly.</li>
+</ul>
+<p><strong>Production Analytics</strong></p>
+<ul>
+<li>Gathering feedback data from production and continuously feeding that back to retrain models scalably to iterate quickly.</li>
+</ul>
+<p><strong>Deployment</strong></p>
+<ul>
+<li>Deploying models in production is slow and is manually scaled up. Multiple teams are tracking models and how they perform in separate locations — there is no single “source of truth” for all stakeholders to monitor performance KPIs.</li>
+</ul>
+<h1 id="best-practices-for-deployment--how-datmo-helps"><strong>Best Practices for Deployment &amp; How Datmo Helps</strong></h1>
+<p>Datmo’s Realtime Dashboard. More about this in Part 2 :)</p>
+<p>Luckily for each of the problems above, there is a better way to help the teams work together toward a common business goal.</p>
+<p><strong>Data Preprocessing</strong></p>
+<ul>
+<li>Ensure configuration parameters are separated out from the model definition, so you can quickly preprocess your data without messing with the model. Datmo keeps track of these configurations</li>
+<li>Keep any feature engineering on data separate from model definitions. Datmo monitors feature engineering through model snapshots.</li>
+</ul>
+<p><strong>Model Development</strong></p>
+<ul>
+<li>Version your model snapshots/iterations. Datmo automatically keeps track of your model iterations including data, features, and snapshots and any data preprocessing done above.</li>
+<li>Run your code within containers. Datmo makes your models automatically scalable with containerization to ensure you can run any snapshot from anywhere.</li>
+</ul>
+<p><strong>Resource Coordination</strong></p>
+<ul>
+<li>Run a number of training tasks in parallel with different configurations to create performant models faster. Datmo orchestrates isolated parallel tasks on any machine</li>
+</ul>
+<p><strong>Model Validation</strong></p>
+<ul>
+<li>Pipe real live data into your models to quickly assess performance and validate your models. Datmo enables validation orchestration on live data and batched historical data</li>
+<li>Create automated validation tests for the production code at regular intervals on subsets of data. Datmo enables models deployed in production to be tested at regular intervals.</li>
+</ul>
+<p><strong>Production Analytics</strong></p>
+<ul>
+<li>Monitor a realtime dashboard to see the performance on live data and sift through different time windows to analyze historical trends. Datmo has a single dashboard to monitor all models</li>
+</ul>
+<p><strong>Deployment</strong></p>
+<ul>
+<li>Package your trained model into an easy-to-run container and monitor all of the statistics in one place so all stakeholders can view results. Datmo’s Realtime Dashboard keeps track of all deployments and enables you to diagnose and fix issues in minutes.</li>
+<li>Swap out the latest version of the snapshot to ensure the highest performance in production. Datmo enables a simple one click replacement of snapshot.</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<p>The process for creating, deploying and managing machine learning in everyday applications may seem complex, but it’s really an iterative loop. It involves a massive amount of coordination and collaboration, but it can be boiled down to some essentials that can be solved for. We’re working to simplify collaboration and improve this process to make it seamless while fitting into a familiar workflow for developers. Datmo enables the people building and maintaining AI to work together, and simplifies this iterative loop.</p>
+<p>Stay tuned for part 2 of our series on Deployment to find out how Datmo makes deployment a piece of cake and learn about how you can use those features to monitor your own work.</p>
+<p>To take advantage of our free tools, sign up for our beta at <a href="https://datmo.com">https://datmo.com</a>. Also, we would love for you to get in touch with us if you have any questions and/or thoughts on what we’ve described above via email at <a href="http://anand@datmo.com">anand@datmo.com</a> or on <a href="https://twitter.com/datmoAI">Twitter</a> at <a href="https://twitter.com/datmoAI">@datmoAI</a> or <a href="https://facebook.com/datmoAI">Facebook</a></p>
+<p>Happy Building 🙂</p>
+<p>Signup to our newsletter at <a href="https://datmo.com">https://datmo.com/</a> to get updates on our product releases and resources.</p>
+<p><em>P.S. Thanks for reading this far! If you found value in this, We’d really appreciate it if you recommend this post (by clicking the ❤ button) so other people can see it!.</em></p>
+<p>Concept Dependencies</p>
+<ul>
+<li><a href="20170517-the-future-of-collaboration-in-data-projects.html" data-slug="20170517-the-future-of-collaboration-in-data-projects">20170517-the-future-of-collaboration-in-data-projects</a></li>
+</ul>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

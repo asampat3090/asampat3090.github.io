@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Future Of Collaboration In Data Projects — Anand Sampat</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/>
+      <path d="M12 19l-7-7 7-7"/>
+    </svg>
+    Anand Sampat
+  </a>
+
+  <article class="prose">
+    <h1>The Future Of Collaboration In Data Projects</h1>
+    <p class="post-meta">May 17, 2017</p>
+<p><strong>May 17, 2017</strong></p>
+<p>Original Link: <a href="https://medium.com/datmo/the-future-of-collaboration-in-data-projects-24d439f197a9">https://medium.com/datmo/the-future-of-collaboration-in-data-projects-24d439f197a9</a></p>
+<p>The other day two of our engineers, we’ll call them Alex and Ignacio, were trying to improve the accuracy of a facial recognition model. The main goal: get the model to recognize Donald Trump in images, videos, and gifs with as high confidence as possible. The sub-goal: Alex wanted Ignacio’s help in improving the model for practical use cases, specifically when being used on a set of 10,000 new labelled images they received from a customer. Since the new images are from “the wild” many times they include multiple people, and a variety of new elements in the frame. He wants Ignacio’s help in determining how to make sure the model still works for these images. The first step: Alex needed to share the most recent iteration of the model with Ignacio, and this is where the collaboration process started to break.</p>
+<h1 id="what-does-sharing-a-model-really-mean">What does sharing a model really mean?</h1>
+<p>There are a few components necessary to make the model Alex created available to my colleagues, people around the world, or himself (on a different server or computer for example).</p>
+<ul>
+<li><strong><em>Code —</em></strong> How can Alex share the raw code he has created with Ignacio?</li>
+<li><strong><em>Data —</em></strong> Where’s the data Alex had used originally, how can Ignacio add the new data set to retrain the model? Can they access the data through different locations or do they have to be on the same server at the same time? Is there concurrent access of the data?</li>
+<li><strong><em>Model Snapshots —</em></strong> How can Alex share the snapshots of different parts of his experiments with Ignacio?</li>
+<li><strong><em>Environmental Dependencies —</em></strong> How can Alex ensure Ignacio can run these experiments in the same way he did?</li>
+<li><strong><em>Methodology —</em></strong> How does Ignacio reproduce the steps Alex’s took in his work? Has Alex kept track of the experiments that he has run and the snapshots of the models he has created? Has he kept a log of why he ran the experiments he did?</li>
+<li><strong><em>Compute Resources —</em></strong> What computational resources will Ignacio need to run Alex’s latest model? Will Alex need to share the resources with him?</li>
+</ul>
+<p><strong>Details on each of the components and what they look like for Alex.</strong></p>
+<p>When Ignacio finally does set up and complete work Alex’s model, how does he share it back? How do they test, deploy, and get feedback incorporated to improve the model once it is in production? Closing these loops are really important to successfully collaborate on a machine learning project. Unfortunately the process today is extremely broken.</p>
+<h1 id="here-are-alexs-options-today">Here are Alex’s options today</h1>
+<p><strong>Common ways to collaborate and share each of these components today.</strong></p>
+<p>Thankfully there are a set of best practices that if implemented result in the best possible results with current tools.</p>
+<h1 id="best-practices-for-collaboration-in-ai">Best Practices for Collaboration in AI</h1>
+<p>We collated these from our own experiences and a series of interviews we’ve conducted with people and teams working on machine learning from a number of organizations including Google, Facebook, Uber, Intuit, Stanford AI Lab.</p>
+<p><strong>Best practices to collaborate on each one of these components.</strong></p>
+<p>The story of Alex and Ignacio is really the story of why we started Datmo. Starting with our Command Line Interface (CLI) and our GUI, our mission is to become the collaborative platform that helps democratize and drive forward artificial intelligence into real-world applications. For Alex and Ignacio, this is what their process looks like in Datmo.</p>
+<p><strong>The Datmo way to collaborate. Keep it simple!</strong></p>
+<p>With our tools we are solving the problem of tracking and sharing your work (you can check out our blog post on the topic <a href="https://medium.com/@datmo_io/tracking-and-reproducibility-in-data-projects-af64ce109774">here</a>) as well as collaboration between team members. We do this with a Command Line Interface that tracks model training sessions and keeps snapshots of the models associated with different parameters and configurations you might run. We also greatly simplify the environment setup, compute handling and deployment by leveraging Docker. Finally, we make plugging new data and new models together super easy with the concept of data contracts which define interaction between models and data (we’ll be posting a blog about that in the near future). Our easy-to-use GUI allows developers building these algorithms to instantly share their models with collaborators and colleagues and visualize their work directly in the web browser. No more fiddling around with shared servers, cloud storage, or manual bookkeeping.</p>
+<p>To take advantage of our free tools, sign up for our beta at <a href="http://datmo.io">https://datmo.io</a>. Also, we would love for you to get in touch with us if you have any questions and/or thoughts on what we’ve described above via email at <a href="mailto:anand@datmo.io">anand@datmo.io</a> or on social media.</p>
+<p>Happy Collaborating 🙂</p>
+<p>Signup to our newsletter at <a href="https://datmo.io/">https://datmo.io/</a> to get updates on our machine learning suite.</p>
+<p><em>P.S. Thanks for reading this far! If you found value in this, We’d really appreciate it if you recommend this post (by clicking the ❤ button) so other people can see it!.</em></p>
+<p>Concept Dependencies</p>
+<ul>
+<li><a href="20170505-tracking-and-reproducibility-in-data-projects.html" data-slug="20170505-tracking-and-reproducibility-in-data-projects">20170505-tracking-and-reproducibility-in-data-projects</a></li>
+</ul>
+  </article>
+</div>
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
