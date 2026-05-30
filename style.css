@@ -139,8 +139,8 @@ button {
   transition: background 0.15s ease, color 0.15s ease;
 }
 button:hover { background: var(--fg); color: var(--bg); }
-button svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
-button:hover svg { transform: translateX(3px); }
+form button svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
+form button:hover svg { transform: translateX(3px); }
 
 /* Focus + motion accessibility */
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, .theme-toggle:focus-visible {
