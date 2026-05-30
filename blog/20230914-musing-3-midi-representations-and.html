@@ -85,20 +85,11 @@
 <p><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6dbd4ba-940f-4b13-9f6c-b4dfe384e0b8_1968x1348.png"><img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6dbd4ba-940f-4b13-9f6c-b4dfe384e0b8_1968x1348.png" alt/></a>MuseScore rendition of the midi file</p>
 <p>In true MIDI form, we assign any instrument we want to this to create a sound from the MIDI file. Here are a few examples:</p>
 <p><em><strong>Piano</strong></em></p>
-<p>1×</p>
-<p>0:00</p>
-<p>-0:45</p>
-<p>Audio playback is not supported on your browser. Please upgrade.</p>
-<p>_ <strong>Mandolin</strong>_</p>
-<p>1×</p>
-<p>0:00</p>
-<p>-0:45</p>
-<p>Audio playback is not supported on your browser. Please upgrade.</p>
-<p>_ <strong>String-Ensemble Synth (Audio Recording - has some ambient noise)</strong>_</p>
-<p>1×</p>
-<p>0:00</p>
-<p>-0:48</p>
-<p>Audio playback is not supported on your browser. Please upgrade.</p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">original post</a>.</span></p>
+<p><em><strong>Mandolin</strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">original post</a>.</span></p>
+<p><em><strong>String-Ensemble Synth (Audio Recording - has some ambient noise)</strong></em></p>
+<p class="audio-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span>Audio sample &mdash; listen on the <a href="https://musicalai.substack.com/p/musing-3-midi-representations-and">original post</a>.</span></p>
 <h2 id="exploring-midi-file-structure">Exploring MIDI File Structure</h2>
 <p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=mFZ_HV2EyAOD">Google Colab Link to Section</a></strong></p>
 <p>A MIDI file is a combo of messages which look something like below. We use <code>mido </code>to parse and print out the messages via python. More details in the Colab, but here’s a quick preview. Put simply, there are meta messages and musical messages, where meta messages set things like time signature, key signature, tempo, etc. while musical messages specify specific the pitch, velocity and duration of notes to be played. MIDI files keep time using “ticks” which, based on tempo, time signature and BPM can be converted into seconds.</p>
@@ -131,7 +122,7 @@
 <h2 id="midi-generation-models---through-the-years">MIDI Generation Models - Through the Years</h2>
 <p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=fUEqtfdjb7Id">Google Colab Link to Section</a></strong></p>
 <p>If we look at some of the core papers looking at MIDI generation there have been a number in the past few years - I won’t try to be completely comprehensive here but I will note some of the important ones. The most notable ones in ~chronological order are (and coincidently, though unsurprisingly, grouped by models which correspond to the most popular types of models at the time):</p>
-<p>_ <strong>RNN-Based</strong>_</p>
+<p><em><strong>RNN-Based</strong></em></p>
 <ul>
 <li><strong>MelodyRNN (Jul 2016) [Paper,<a href="https://github.com/magenta/magenta/blob/main/magenta/models/melody_rnn/README.md">Code</a>, <a href="https://magenta.tensorflow.org/2016/07/15/lookback-rnn-attention-rnn/">Website</a>]</strong>: LSTM based model for MIDI inputs</li>
 </ul>
@@ -140,7 +131,7 @@
 <ul>
 <li><strong>DeepBach (Dec 2016) [<a href="https://arxiv.org/abs/1612.01010">Paper</a>, <a href="https://github.com/Ghadjeres/DeepBach">Code</a>, <a href="https://sites.google.com/site/deepbachexamples/">Website</a>]</strong>: a Steerable Model for Bach Chorales Generation</li>
 </ul>
-<p>_ <strong>GAN-Based</strong>_</p>
+<p><em><strong>GAN-Based</strong></em></p>
 <ul>
 <li>
 <p><strong>MidiNet (Mar 2017)</strong> <strong>[<a href="https://arxiv.org/abs/1703.10847v2">Paper</a>, <a href="https://github.com/RichardYang40148/MidiNet">Code</a>, Website]</strong>: Convolutional GAN-based sequential prediction of MIDI nodes with conditioning options for chord sequences and melody of previous bars</p>
@@ -149,13 +140,13 @@
 <p><strong>MuseGAN (~2017)</strong> <strong>[<a href="https://salu133445.github.io/musegan/papers">Papers</a>, <a href="https://github.com/salu133445/musegan">Code</a>, <a href="https://salu133445.github.io/musegan/">Website</a>]</strong>: GAN-based model for generating multi-track MIDI files</p>
 </li>
 </ul>
-<p>_ <strong>VAE-Based</strong>_</p>
+<p><em><strong>VAE-Based</strong></em></p>
 <ul>
 <li><strong>MusicVAE (Mar 2018) [<a href="https://arxiv.org/abs/1803.05428">Paper</a>, <a href="https://github.com/magenta/magenta/tree/main/magenta/models/music_vae">Code</a>, <a href="https://magenta.tensorflow.org/music-vae">Website</a>]</strong>: Interpolate between two 16 bar midi notes for smoothness, realism and expression</li>
 </ul>
 <pre><code>* Derivatives: GrooVAE
 </code></pre>
-<p>_ <strong>Transformer-Based</strong>_</p>
+<p><em><strong>Transformer-Based</strong></em></p>
 <ul>
 <li>
 <p><strong>Music Transformer (Dec 2018) [<a href="https://arxiv.org/abs/1809.04281">Paper</a>, <a href="https://github.com/magenta/magenta/tree/main/magenta/models/score2perf">Code</a>, <a href="https://magenta.tensorflow.org/music-transformer">Website</a>]</strong>: Transformer-based model for generating multi-track MIDI files</p>
@@ -177,7 +168,7 @@
 <p>X ∈ [0,127]^(h×w)</p>
 <p><strong>NOTE: The number of pitches in a MIDI file is 128, however the dimension of</strong><code>h</code> <strong>may be reduced to narrow the range of notes to a specific instrument (e.g. 88 keys in a piano) or can be expanded to include silence or rests (e.g. 129/130 or 89/90). The time steps also depend on the model and level of granularity desired. For coherence, many models filter inputs to 4/4 time signatures and use sixteenth notes as a single time step (16 steps / bar).</strong></p>
 <p>For the RNN-Based, GAN-Based and VAE-Based models above, at some level all of these look at splitting the MIDI files into discrete time bars and ignoring the velocity. However they vary in how they split the bars and the granularity of notes they use.</p>
-<p>_ <strong>RNN-Based</strong>_</p>
+<p><em><strong>RNN-Based</strong></em></p>
 <ul>
 <li>
 <p><strong>MelodyRNN</strong> : “[60, -2, 60, -2, 67, -2, 67, -2]” (-2 = no event, -1=note-off event, 0-127 = note-on event for that MIDI pitch) for each track. 4/4 time signature with 16th notes as a single time step. Each bar has 16 time steps. Samples can be 2 bars or 16 bars.</p>
@@ -186,7 +177,7 @@
 <p><strong>DeepBach</strong> : 4 tracks/rows (soprano, alto, tenor, bass) with 16 time steps per bar (16th notes) represented by strings for the 128 pitches <code>C1</code> to <code>G9</code> and a hold <code>__</code> (i.e. 129 total pitches), two additional rows are added with <code>0</code> or <code>1</code> to indicate fermata and the beat count (e.g. <code>1,2,3,4</code>)</p>
 </li>
 </ul>
-<p>_ <strong>GAN-Based</strong>_</p>
+<p><em><strong>GAN-Based</strong></em></p>
 <ul>
 <li>
 <p><strong>MidiNet</strong> : piano roll representation in 4/4 time signature with 16th notes as a single time step. Each track is a new channel (e.g. CxHxW). Each sample is 1 bar and each value can be one of 128 MIDI pitches or silence resulting in a Cx129x16 matrix for each bar.</p>
@@ -195,7 +186,7 @@
 <p><strong>MuseGAN</strong> : piano roll representation in 4/4 time signature with 16th notes as 6 time steps. That is each bar has 96 time steps. Each track is a new channel and each sample is 1 bar (e.g. CxHxW). Each value can be one of 128 MIDI pitches resulting in Cx128x96 matrix for each bar. The dimensions are rearranged to be 96x128xC.</p>
 </li>
 </ul>
-<p>_ <strong>VAE-Based</strong>_</p>
+<p><em><strong>VAE-Based</strong></em></p>
 <ul>
 <li><strong>MusicVAE</strong> : “[60, -2, 60, -2, 67, -2, 67, -2]” (-2 = no event, -1=note-off event, 0-127 = note-on event for that MIDI pitch) for each track. 4/4 time signature with 16th notes as a single time step. Each bar has 16 time steps. Samples can be 2 bars or 16 bars.</li>
 </ul>
@@ -240,7 +231,7 @@
 <p><strong><a href="https://colab.research.google.com/github/asampat3090/musicalai/blob/main/_3_MIDI_representation_and_AI.ipynb#scrollTo=KJ2tIUF3yAOT">Google Colab Link to Section</a></strong></p>
 <p>Following in the footsteps of recent language models, transformer based models can use more expressive piano roll and language-based encodings to represent the MIDI files. In particular, language modeling has often used byte-pair encodings (BPE) to represent words as a sequence of bytes. This is a great way to represent words because it allows for a variable length encoding of words and allows for the model to learn sub-word representations.</p>
 <p>Let’s explore what the Transformer based models use to represent MIDI files.</p>
-<p>_ <strong>Transformer-Based</strong>_</p>
+<p><em><strong>Transformer-Based</strong></em></p>
 <ul>
 <li><strong>Music Transformer (Google)</strong> : Multiple formats for different datasets and experiments</li>
 </ul>
